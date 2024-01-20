@@ -18,27 +18,35 @@ clock = pygame.time.Clock()
 
 groupOfGroups = []
 
-catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
-catImage = pygame.transform.scale(catImage, (100, 100))
-cat = BackgroundObject(catImage)
+# catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
+# catImage = pygame.transform.scale(catImage, (100, 100))
+# cat = BackgroundObject(catImage)
 
-backgroundGroup = pygame.sprite.Group()
-groupOfGroups.append(backgroundGroup)
-backgroundGroup.add(cat)
+# backgroundGroup = pygame.sprite.Group()
+# groupOfGroups.append(backgroundGroup)
+# backgroundGroup.add(cat)
 
 groundObstacles = pygame.sprite.Group()
 groupOfGroups.append(groundObstacles)
+
+platforms = pygame.sprite.Group()
+groupOfGroups.append(platforms)
 
 ### STARTING GAME LOOP ###
 
 
 def start_game():
 
-    prevTime = pygame.time.get_ticks()
-    groundObstacleInterval = 2000
+    prevGroundObsTime = pygame.time.get_ticks()
+    groundObstacleInterval = 4000
+
+    platformTime = 0
+    platformsToAdd = 0
 
     running = True
     while running:
+
+        time = pygame.time.get_ticks()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -47,12 +55,24 @@ def start_game():
             elif event.type == pygame.K_ESCAPE or event.type == pygame.K_DELETE:
                 running = False
 
-        if pygame.time.get_ticks() - prevTime > groundObstacleInterval:
-            prevTime = pygame.time.get_ticks()
+
+        if time - prevGroundObsTime > groundObstacleInterval:
+            prevGroundObsTime = time
             groundObstacles.add(helpers.createGroundObstacle())
+            platformTime = time
+            platformsToAdd = 3
+
+        if platformsToAdd > 0:
+            if time - platformTime > groundObstacleInterval/5:
+                platformTime = time
+                if platformsToAdd == 3:
+                    platforms.add(helpers.createPlatform(low=True))
+                else:
+                    platforms.add(helpers.createPlatform(low=False))
+                
+                platformsToAdd -= 1
 
             
-
         screen.fill((0,0,0))
         
         for group in groupOfGroups:
