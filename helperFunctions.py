@@ -42,5 +42,5 @@ def createMotionCaptureModel(string):
 
 def createPlayer():
     
-    physicist = Player(os.path.dirname(os.path.realpath(__file__)) + '/media/garfgarf.png')
+    physicist = Player(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_v1.png')
     return physicist

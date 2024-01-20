@@ -22,6 +22,9 @@ groupOfGroups = []
 
 catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
 catImage = pygame.transform.scale(catImage, (100, 100))
+
+character = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_v1.png').convert_alpha()
+character = pygame.transform.scale(character, (100, 100))
 # cat = BackgroundObject(catImage)
 
 # backgroundGroup = pygame.sprite.Group()
