@@ -6,16 +6,14 @@ def getVars(listOfNames):
     match the vars you want from the below dictionary
     '''
 
-<<<<<<< HEAD
     # variable dictionary
     vars = {'width': 900, 'height': 700, 
             'dt': 0.01, 
             'game_name': "Chasing the Contraption"}
     
     # list of variables to return
-=======
-    vars = {'width': 1300, 'height': 750, 'dt': 0.01}
->>>>>>> origin/main
+
+    vars = {'width': 1300, 'height': 750, 'dt': 0.01,'playerVelocity':100,'jumpVel':100}
     returned = []
 
     for name in listOfNames:
