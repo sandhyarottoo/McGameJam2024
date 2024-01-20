@@ -3,6 +3,7 @@ import pygame_menu # install this using ==> pip install pygame-menu -U
 import numpy as np
 from globalVars import getVars
 from BackgroundObject import BackgroundObject
+import helperFunctions as helpers
 import sys
 import os
 
@@ -22,9 +23,16 @@ cat = BackgroundObject(catImage)
 backgroundGroup = pygame.sprite.Group()
 backgroundGroup.add(cat)
 
+groundObstacles = pygame.sprite.Group()
+
 ### STARTING GAME LOOP ###
 
+
 def start_game():
+
+    prevTime = pygame.time.get_ticks()
+    groundObstacleInterval = 2000
+
     running = True
     while running:
 
@@ -32,36 +40,22 @@ def start_game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 
-            elif event.type == pygame.K_ESCAPE or pygame.K_DELETE:
+            elif event.type == pygame.K_ESCAPE or event.type == pygame.K_DELETE:
                 running = False
 
-            # elif event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_LEFT:
-            #         bucket.vel.x -= bucket.walkSpeed
-            #     if event.key == pygame.K_RIGHT:
-            #         bucket.vel.x += bucket.walkSpeed
-            #     if event.key == pygame.K_SPACE:
-            #         position, velocity = getInitialParams()
-            #         ball.pos = position
-            #         ball.vel = velocity
-                    
-            # elif event.type == pygame.KEYUP:
-            #     if event.key == pygame.K_LEFT:
-            #         if pygame.key.get_pressed()[pygame.K_RIGHT]:
-            #             bucket.vel.x += bucket.walkSpeed
-            #         else:
-            #             bucket.vel.x = 0
-            #     if event.key == pygame.K_RIGHT:
-            #         if pygame.key.get_pressed()[pygame.K_LEFT]:
-            #             bucket.vel.x -= bucket.walkSpeed
-            #         else:
-            #             bucket.vel.x = 0
+        if pygame.time.get_ticks() - prevTime > groundObstacleInterval:
+            prevTime = pygame.time.get_ticks()
+            groundObstacles.add(helpers.createGroundObstacle())
+
             
 
         screen.fill((0,0,0))
 
         backgroundGroup.update(dt)
         backgroundGroup.draw(screen)
+
+        groundObstacles.update(dt)
+        groundObstacles.draw(screen)
 
 
         pygame.display.flip()

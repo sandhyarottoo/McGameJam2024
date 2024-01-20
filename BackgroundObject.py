@@ -11,7 +11,7 @@ class BackgroundObject(pygame.sprite.Sprite):
     def __init__(self, image):
         super().__init__()
 
-        self.pos = pygame.Vector2(WIDTH/2, HEIGHT/2)
+        self.pos = pygame.Vector2(WIDTH/2, HEIGHT/3)
         self.vel = pygame.Vector2(-90, 0)
 
         self.image = image
