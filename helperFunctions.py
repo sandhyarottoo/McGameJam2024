@@ -1,7 +1,7 @@
 import pygame
 import numpy as np
 import os
-import Obstacles
+import ObjectClasses.Obstacles as Obstacles
 from globalVars import getVars
 
 WIDTH, HEIGHT, g_obs_dims = getVars(['width', 'height', 'g_obs_dims'])

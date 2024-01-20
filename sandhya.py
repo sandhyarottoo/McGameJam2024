@@ -5,7 +5,7 @@ import sys
 import os
 from globalVars import getVars
 from ObjectClasses.BackgroundObject import BackgroundObject
-import player
+import ObjectClasses.player as player
 
 path = os.getcwd() + '/media/cat.png'
 print(path)
