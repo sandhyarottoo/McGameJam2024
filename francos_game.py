@@ -1,7 +1,7 @@
 import pygame
 import pygame_menu # install this using ==> pip install pygame-menu -U
 import numpy as np
-from globalVars import getVars
+from globalVars import getVars, changeValue, resetValues
 from ObjectClasses.BackgroundObject import BackgroundObject
 from ObjectClasses.Contraption import Contraption
 import ObjectClasses.player as player
@@ -124,7 +124,12 @@ def start_game():
 # initializing menu
 menu = pygame_menu.Menu("Main Menu", WIDTH, HEIGHT, theme=pygame_menu.themes.THEME_BLUE)
 
+def set_sensitivity(value, sensitivity):
+    changeValue('playervelocity', sensitivity)
+    print(getVars)
+
 menu.add.button('Play', start_game)
+menu.add.selector('Sensitivity: ', [('Low', 1), ('Medium', 3), ('High', 5)], onchange=set_sensitivity)
 menu.add.button('Quit', pygame_menu.events.EXIT)
 
 menu.mainloop(screen)

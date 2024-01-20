@@ -21,20 +21,16 @@ def getVars(listOfNames):
 
 def changeValue(key, value):
     '''
-    Change the value of a global variable
+    Change the value of a specified global variable.
     '''
     global vars
     vars[key] = value
     
 def resetValues():
+    '''
+    Resets global variables.
+    '''
     global global_vars
     global vars
     
     vars = global_vars.copy()
-    
-    
-print(vars)
-changeValue("playervelocity", 1)
-print(vars)
-resetValues()
-print(vars)
