@@ -5,6 +5,8 @@ from ObjectClasses.BackgroundObject import BackgroundObject
 import ObjectClasses.Obstacles as Obstacles
 from ObjectClasses.player import Player as Player
 from globalVars import getVars
+import ObjectClasses.enemies as enemies
+
 
 WIDTH, HEIGHT, g_obs_dims = getVars(['width', 'height', 'g_obs_dims'])
 
@@ -44,3 +46,20 @@ def createPlayer():
     
     physicist = Player(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_v1.png')
     return physicist
+
+
+def createBullet():
+
+    imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Soccer_Ball.png').convert_alpha()
+    imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Basketball_PNG.png').convert_alpha()
+
+    imageneg = pygame.transform.scale(imageneg, (100, 100))
+    imagepos = pygame.transform.scale(imagepos, (100, 100))
+
+    signs = [-1,1]
+    num = np.random.choice(signs)
+    bullet = enemies.ChargeBullet(num,imagepos,imageneg)
+
+    return bullet
+
+

@@ -46,6 +46,8 @@ physicist = helpers.createPlayer()
 players = pygame.sprite.Group()
 players.add(physicist)
 
+bullets = pygame.sprite.Group()
+
 
 ### STARTING GAME LOOP ###
 
@@ -56,6 +58,10 @@ def start_game():
 
     platformTime = 0
     platformsToAdd = 0
+
+    bulletTime = 0
+    bulletInterval = np.random.randint(3000,4000)
+    prevBulletTime = pygame.time.get_ticks()
 
     running = True
     while running:
@@ -89,12 +95,23 @@ def start_game():
                 
                 platformsToAdd -= 1
 
+        if time - prevBulletTime > bulletInterval:
+            prevBulletTime = time
+            bullet = helpers.createBullet()
+            bullets.add(bullet)
+
             
         screen.fill((0,0,0))
 
+        bullets.update(dt)
+        bullets.draw(screen)
+
         keys = pygame.key.get_pressed()
-        players.update(events, keys, platforms, groundObstacles)
+        players.update(events, keys, platforms, groundObstacles,bullets)
         players.draw(screen)
+        for player in players:
+            if player.enemyCollision(bullets):
+                player.kill()
         
         for group in groupOfGroups:
             group.update(dt)

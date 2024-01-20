@@ -21,7 +21,7 @@ class ChargeBullet(pygame.sprite.Sprite):
         elif sign == -1:
             image = imageneg
         self.image = image
-        self.vel = pygame.Vector2(-100,0)
+        self.vel = pygame.Vector2(-500,0)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH,np.random.randint(HEIGHT/2,HEIGHT))
 
@@ -29,6 +29,7 @@ class ChargeBullet(pygame.sprite.Sprite):
         self.rect.x += self.vel.x*dt
         if self.rect.x + self.image.get_width()/2 < 0:
             self.kill()
+        self.pos = pygame.Vector2(self.rect.x,self.rect.y)
+    
 
-    def getChargePos(self):
-        return self.rect
+

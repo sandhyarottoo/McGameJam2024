@@ -37,6 +37,8 @@ player = player.Player(path)
 players = pygame.sprite.Group()
 players.add(player)
 
+bullets = pygame.sprite.Group()
+
 def start_game():
 
     prevGroundObsTime = pygame.time.get_ticks()
@@ -44,6 +46,11 @@ def start_game():
 
     platformTime = 0
     platformsToAdd = 0
+
+    bulletTime = 0
+    bulletInterval = np.random.randint(3000,4000)
+    prevBulletTime = pygame.time.get_ticks()
+
 
 
     running = True
@@ -76,12 +83,21 @@ def start_game():
                 
                 platformsToAdd -= 1
 
+        if time - prevBulletTime > bulletInterval:
+            prevBulletTime = time
+            bullet = helpers.createBullet()
+            bullets.add(bullet)
+
+
             
         screen.fill((0,0,0))
         #screen.blit(player.image,player.rect)
+        bullets.update(dt)
+        bullets.draw(screen)
         keys = pygame.key.get_pressed()
-        player.update(events,keys,platforms,groundObstacles)
+        player.update(events,keys,platforms,groundObstacles,bullets)
         players.draw(screen)
+
         
         for group in groupOfGroups:
             group.update(dt)

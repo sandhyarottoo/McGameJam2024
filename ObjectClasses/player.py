@@ -3,6 +3,8 @@ import numpy as np
 import os
 from globalVars import getVars
 
+
+
 WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL,playerheight,playerwidth = getVars(['width', 'height', 'dt','playervelocity','jumpvel','playerheight','playerwidth'])
 
 class Player(pygame.sprite.Sprite):
@@ -21,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.jumping = False
 
 
-    def update(self, events, keys, platforms, obstacles):
+    def update(self, events, keys, platforms, obstacles,bullets):
         
         #treat landing on the ground
         if self.pos.y + playerheight/2 > HEIGHT - 10:
@@ -41,11 +43,11 @@ class Player(pygame.sprite.Sprite):
             self.pos.x += PLAYERXVEL
         if keys[pygame.K_LEFT]:
             self.pos.x -= PLAYERXVEL
-        
-        #accelerate with forces
-        self.acc = self.applyForces(['gravity'])/self.mass
-        self.vel += self.acc*dt
-        self.pos += self.vel*dt
+        for bullet in bullets:
+            #accelerate with forces
+            self.acc = self.applyForces(['gravity','electricity'],bullet)/self.mass
+            self.vel += self.acc*dt
+            self.pos += self.vel*dt
         
         #treat the platform collisions
         for platform in platforms:
@@ -79,13 +81,13 @@ class Player(pygame.sprite.Sprite):
             
 
 
-    def enemyCollision(self,enemy):
-
-        if pygame.sprite.collide_mask(self,enemy):
-            return True
+    def enemyCollision(self,enemies):
+        for enemy in enemies:
+            if pygame.sprite.collide_mask(self,enemy):
+                return True
         
 
-    def applyForces(self,listofforces):
+    def applyForces(self,listofforces,bullet):
         #get accelerations
         
         force = pygame.Vector2(0, 0)
@@ -94,15 +96,28 @@ class Player(pygame.sprite.Sprite):
             g = 200
             force += pygame.Vector2(0, self.mass*g)
     
-        #if 'electricity' in listofforces:
+        if 'electricity' in listofforces:
+            bulletPos = bullet.pos-self.pos
+            bulletCharge = bullet.charge
+            r = bulletPos - self.pos
+            abs_r = np.sqrt(r.x**2 + r.y**2)
+            cos = r.x/abs_r
+            sin = r.y/abs_r
+            force += pygame.Vector2(20000*bulletCharge*self.charge*cos/r.x**2,20000*bulletCharge*self.charge*sin/r.y**2)
+            
 
 
         return force
+
+
+    
+
 
 
     #if force == 'electric':
 
 # def infinitePlane(player):
 #     #for an infinite charged plane on the ground
+
 
 
