@@ -9,12 +9,25 @@ import helperFunctions as helpers
 import sys
 import os
 
-WIDTH, HEIGHT, dt = getVars(['width', 'height', 'dt'])
+WIDTH, HEIGHT, dt, g_obs_dims = getVars(['width', 'height', 'dt', 'g_obs_dims'])
 
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
+
+### loading images ###
+
+imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Soccer_Ball.png').convert_alpha()
+imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Basketball_PNG.png').convert_alpha()
+imageneg = pygame.transform.scale(imageneg, (50, 50))
+imagepos = pygame.transform.scale(imagepos, (50, 50))
+
+groundObjectImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/stronq_doge.png').convert_alpha()
+groundObjectImage = pygame.transform.scale(groundObjectImage, g_obs_dims)
+
+platformImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/lebron.jpeg').convert_alpha()
+platformImage = pygame.transform.scale(platformImage, (80, 20))
 
 ### OBJECT SETUP ###
 
@@ -81,7 +94,7 @@ def start_game():
 
         if time - prevGroundObsTime > groundObstacleInterval:
             prevGroundObsTime = time
-            groundObstacles.add(helpers.createGroundObstacle())
+            groundObstacles.add(helpers.createGroundObstacle(groundObjectImage))
             platformTime = time
             platformsToAdd = 3
 
@@ -89,9 +102,9 @@ def start_game():
             if time - platformTime > groundObstacleInterval/5:
                 platformTime = time
                 if platformsToAdd == 3:
-                    platforms.add(helpers.createPlatform(low=True))
+                    platforms.add(helpers.createPlatform(platformImage, low=True))
                 else:
-                    platforms.add(helpers.createPlatform(low=False))
+                    platforms.add(helpers.createPlatform(platformImage, low=False))
                 
                 platformsToAdd -= 1
 
@@ -99,9 +112,8 @@ def start_game():
 
         if time - prevBulletTime > bulletInterval:
             prevBulletTime = time
-            bullet = helpers.createBullet()
+            bullet = helpers.createBullet(imagepos, imageneg)
             bullets.add(bullet)
-
             
         screen.fill((0,0,0))
 

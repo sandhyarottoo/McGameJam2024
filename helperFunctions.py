@@ -10,23 +10,20 @@ import ObjectClasses.enemies as enemies
 
 WIDTH, HEIGHT, g_obs_dims = getVars(['width', 'height', 'g_obs_dims'])
 
-def createGroundObstacle():
-    image = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/stronq_doge.png').convert_alpha()
-    image = pygame.transform.scale(image, g_obs_dims)
+def createGroundObstacle(image):
     obstacle = Obstacles.GroundObstacle(image)
 
     return obstacle
 
-def createPlatform(low = True):
-    image = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/lebron.jpeg').convert_alpha()
-    image = pygame.transform.scale(image, (80, 20))
 
+def createPlatform(image, low = True):
     if low:
         platform = Obstacles.Platform(image, np.random.randint(HEIGHT - g_obs_dims[1] - 50, HEIGHT - g_obs_dims[1]))
     else:
         platform = Obstacles.Platform(image, np.random.randint(HEIGHT - g_obs_dims[1] - 300, HEIGHT - g_obs_dims[1] - 100))
 
     return platform
+
 
 def createMotionCaptureModel(string):
     image = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/garfgarf.png').convert_alpha()
@@ -48,14 +45,8 @@ def createPlayer():
     return physicist
 
 
-def createBullet():
 
-    imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Soccer_Ball.png').convert_alpha()
-    imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Basketball_PNG.png').convert_alpha()
-
-    imageneg = pygame.transform.scale(imageneg, (50, 50))
-    imagepos = pygame.transform.scale(imagepos, (50, 50))
-
+def createBullet(imagepos, imageneg):
     signs = [-1,1]
     num = np.random.choice(signs)
     bullet = enemies.ChargeBullet(num,imagepos,imageneg)

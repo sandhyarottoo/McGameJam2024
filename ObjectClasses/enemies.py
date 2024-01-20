@@ -4,9 +4,6 @@ import os
 from globalVars import getVars
 import ObjectClasses.player as player
 
-permittivity = 10
-
-
 WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL = getVars(['width', 'height', 'dt','playervelocity','jumpvel'])
 #imagepos = positive charge
 #imageneg = negative charge
@@ -14,6 +11,8 @@ WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL = getVars(['width', 'height', 'dt','pla
 class ChargeBullet(pygame.sprite.Sprite):
     def __init__(self,sign,imagepos,imageneg):
         super().__init__()
+
+        permittivity = 10
         #sign has to be 1 or -1
         self.charge = sign*permittivity
 
@@ -30,7 +29,7 @@ class ChargeBullet(pygame.sprite.Sprite):
 
     def update(self,dt):
         self.pos.x += self.vel.x*dt
-        
+
         if self.pos.x + self.image.get_width()/2 < 0:
             self.kill()
 
