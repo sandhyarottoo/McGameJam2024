@@ -5,7 +5,7 @@ from globalVars import getVars
 
 
 
-WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL,playerheight,playerwidth = getVars(['width', 'height', 'dt','playervelocity','jumpvel','playerheight','playerwidth'])
+WIDTH, HEIGHT, dt, PLAYERYVEL, playerheight, playerwidth = getVars(['width', 'height', 'dt','jumpvel', 'playerheight', 'playerwidth'])
 
 class Player(pygame.sprite.Sprite):
     def __init__(self,image):
@@ -24,6 +24,8 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self, events, keys, platforms, obstacles,bullets):
+        
+        PLAYERXVEL = getVars(['playervelocity'])[0]
         
         #treat landing on the ground
         if self.pos.y + playerheight/2 > HEIGHT - 10:
