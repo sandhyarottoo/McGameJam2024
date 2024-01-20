@@ -4,7 +4,9 @@
 ## DRAWINGS AND ANIMATIONS
 
 ### Backgrounds
-
+- Physics building
+- Beach
+- Whatever other stupid places
 
 ### Characters
 - Main Player: mad scientist (wacky hair). --> Add animation! (i.e., make several frames of character but in different stages of running, shooting, etc)
@@ -16,3 +18,6 @@
 
 ---
 ## PROGRAMMING
+
+### Characters
+- 
