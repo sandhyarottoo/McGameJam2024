@@ -46,8 +46,8 @@ physicist = helpers.createPlayer()
 players = pygame.sprite.Group()
 players.add(physicist)
 
-### STARTING GAME LOOP ###
 
+### STARTING GAME LOOP ###
 
 def start_game():
 

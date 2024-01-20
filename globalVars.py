@@ -10,7 +10,7 @@ def getVars(listOfNames):
 
     vars = {'width': 1300, 'height': 750, 'dt': 0.01,'playervelocity':5,'jumpvel':300, 
             'obstacle_speed': -130, 'g_obs_dims': (60, 120), 'game_name': "Chasing the Contraption",
-            'playerheight':120,'playerwidth':70}
+            'playerheight':211,'playerwidth':60}
     
     returned = []
 
