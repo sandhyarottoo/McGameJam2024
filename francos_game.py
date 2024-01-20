@@ -16,14 +16,18 @@ clock = pygame.time.Clock()
 
 ### OBJECT SETUP ###
 
+groupOfGroups = []
+
 catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
 catImage = pygame.transform.scale(catImage, (100, 100))
 cat = BackgroundObject(catImage)
 
 backgroundGroup = pygame.sprite.Group()
+groupOfGroups.append(backgroundGroup)
 backgroundGroup.add(cat)
 
 groundObstacles = pygame.sprite.Group()
+groupOfGroups.append(groundObstacles)
 
 ### STARTING GAME LOOP ###
 
@@ -50,12 +54,10 @@ def start_game():
             
 
         screen.fill((0,0,0))
-
-        backgroundGroup.update(dt)
-        backgroundGroup.draw(screen)
-
-        groundObstacles.update(dt)
-        groundObstacles.draw(screen)
+        
+        for group in groupOfGroups:
+            group.update(dt)
+            group.draw(screen)
 
 
         pygame.display.flip()

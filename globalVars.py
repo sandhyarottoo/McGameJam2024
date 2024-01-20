@@ -6,7 +6,7 @@ def getVars(listOfNames):
     match the vars you want from the below dictionary
     '''
 
-    vars = {'width': 900, 'height': 700, 'dt': 0.01}
+    vars = {'width': 1300, 'height': 750, 'dt': 0.01}
     returned = []
 
     for name in listOfNames:
