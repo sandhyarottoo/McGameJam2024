@@ -1,6 +1,7 @@
 import pygame
 import numpy as np
 import os
+import ObjectClasses.BackgroundObject as BackgroundObject
 import ObjectClasses.Obstacles as Obstacles
 from globalVars import getVars
 
@@ -23,3 +24,17 @@ def createPlatform(low = True):
         platform = Obstacles.Platform(image, np.random.randint(HEIGHT - g_obs_dims[1] - 300, HEIGHT - g_obs_dims[1] - 100))
 
     return platform
+
+def createMotionCaptureModel(string):
+    image = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/garfgarf.png').convert_alpha()
+
+    if string == 'player':
+        image = pygame.transform.scale(image, (80, 100))
+
+    elif string == 'contraption':
+        image = pygame.transform.scale(image, (200, 200))
+    
+    model = BackgroundObject(image)
+    model.vel.x = 0
+
+    return model

@@ -56,6 +56,7 @@ def start_game():
                 if event.key == pygame.K_ESCAPE:
                     running = False
 
+        # OBSTACLE SECTION
 
         if time - prevGroundObsTime > groundObstacleInterval:
             prevGroundObsTime = time
