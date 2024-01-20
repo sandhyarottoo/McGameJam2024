@@ -1,8 +1,30 @@
 import pygame
-import pygame_menu # install this using ==> pip install pygame-menu -U
 import numpy as np
 from globalVars import getVars
-from ObjectClasses.BackgroundObject import BackgroundObject
-import helperFunctions as helpers
-import sys
-import os
+
+
+# importing global variables
+WIDTH, HEIGHT, dt = getVars(['width', 'height', 'dt'])
+
+# creating class
+class Contraption(pygame.sprite.Sprite):
+    '''
+    Class for the contraption. 
+    '''
+
+    def __init__(self, image):
+        super().__init__()
+
+        self.pos = pygame.Vector2(WIDTH/2, HEIGHT/2)
+        self.vel = pygame.Vector2(0, 0)
+
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.pos.x, self.pos.y)
+    
+    
+    def update(self, dt):
+
+        self.pos.x = WIDTH/2 + 100*np.cos(100*dt)
+        self.pos.y = HEIGHT/2 + 100*np.sin(100*dt)
+        self.rect.center = (self.pos.x, self.pos.y)

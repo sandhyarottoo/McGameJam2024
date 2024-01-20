@@ -2,30 +2,44 @@ import pygame
 import pygame_menu # install this using ==> pip install pygame-menu -U
 import numpy as np
 from globalVars import getVars
-from ObjectClasses.BackgroundObject import BackgroundObject
+from BackgroundObject import BackgroundObject
+from ObjectClasses.Contraption import Contraption
+import helperFunctions as helpers
 import sys
 import os
 
-WIDTH, HEIGHT, dt , GAME_NAME = getVars(['width', 'height', 'dt', 'game_name'])
+WIDTH, HEIGHT, dt = getVars(['width', 'height', 'dt'])
 
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption(GAME_NAME)
 clock = pygame.time.Clock()
 
 ### OBJECT SETUP ###
 
+groupOfGroups = []
+
 catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
 catImage = pygame.transform.scale(catImage, (100, 100))
 cat = BackgroundObject(catImage)
+contraption = Contraption(catImage)
 
 backgroundGroup = pygame.sprite.Group()
+groupOfGroups.append(backgroundGroup)
 backgroundGroup.add(cat)
+
+groundObstacles = pygame.sprite.Group()
+groupOfGroups.append(groundObstacles)
+
 
 ### STARTING GAME LOOP ###
 
+
 def start_game():
+
+    prevTime = pygame.time.get_ticks()
+    groundObstacleInterval = 2000
+
     running = True
     while running:
 
@@ -33,47 +47,29 @@ def start_game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 
-            # elif event.type == pygame.K_ESCAPE or event.type == pygame.K_DELETE:
-            #     running = False
+            elif event.type == pygame.key.K_ESCAPE:
+                running = False
 
-            # elif event.type == pygame.KEYDOWN:
-            #     if event.key == pygame.K_LEFT:
-            #         bucket.vel.x -= bucket.walkSpeed
-            #     if event.key == pygame.K_RIGHT:
-            #         bucket.vel.x += bucket.walkSpeed
-            #     if event.key == pygame.K_SPACE:
-            #         position, velocity = getInitialParams()
-            #         ball.pos = position
-            #         ball.vel = velocity
-                    
-            # elif event.type == pygame.KEYUP:
-            #     if event.key == pygame.K_LEFT:
-            #         if pygame.key.get_pressed()[pygame.K_RIGHT]:
-            #             bucket.vel.x += bucket.walkSpeed
-            #         else:
-            #             bucket.vel.x = 0
-            #     if event.key == pygame.K_RIGHT:
-            #         if pygame.key.get_pressed()[pygame.K_LEFT]:
-            #             bucket.vel.x -= bucket.walkSpeed
-            #         else:
-            #             bucket.vel.x = 0
+        if pygame.time.get_ticks() - prevTime > groundObstacleInterval:
+            prevTime = pygame.time.get_ticks()
+            groundObstacles.add(helpers.createGroundObstacle())
+
             
 
         screen.fill((0,0,0))
-
-        backgroundGroup.update(dt)
-        backgroundGroup.draw(screen)
+        
+        # for group in groupOfGroups:
+        #     group.update(dt)
+        #     group.draw(screen)
+            
+        contraption.update(dt)
 
 
         pygame.display.flip()
         
 
-# Setting up the menua theme
-main_theme = pygame_menu.Theme(background_color=(200, 200, 150, 255),
-                               title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE_TITLE)
-
 # initializing menu
-menu = pygame_menu.Menu(GAME_NAME, WIDTH, HEIGHT, theme=main_theme)
+menu = pygame_menu.Menu("Main Menu", WIDTH, HEIGHT, theme=pygame_menu.themes.THEME_BLUE)
 
 menu.add.button('Play', start_game)
 menu.add.button('Quit', pygame_menu.events.EXIT)

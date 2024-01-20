@@ -52,8 +52,9 @@ def start_game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 
-            elif event.type == pygame.K_ESCAPE or event.type == pygame.K_DELETE:
-                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
 
 
         if time - prevGroundObsTime > groundObstacleInterval:
