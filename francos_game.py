@@ -95,6 +95,8 @@ def start_game():
                 
                 platformsToAdd -= 1
 
+        # bullets
+
         if time - prevBulletTime > bulletInterval:
             prevBulletTime = time
             bullet = helpers.createBullet()

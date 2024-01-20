@@ -53,8 +53,8 @@ def createBullet():
     imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Soccer_Ball.png').convert_alpha()
     imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Basketball_PNG.png').convert_alpha()
 
-    imageneg = pygame.transform.scale(imageneg, (100, 100))
-    imagepos = pygame.transform.scale(imagepos, (100, 100))
+    imageneg = pygame.transform.scale(imageneg, (50, 50))
+    imagepos = pygame.transform.scale(imagepos, (50, 50))
 
     signs = [-1,1]
     num = np.random.choice(signs)
