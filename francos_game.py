@@ -4,6 +4,7 @@ import numpy as np
 from globalVars import getVars
 from ObjectClasses.BackgroundObject import BackgroundObject
 from ObjectClasses.Contraption import Contraption
+import ObjectClasses.player as player
 import helperFunctions as helpers
 import sys
 import os
@@ -38,6 +39,10 @@ groupOfGroups.append(groundObstacles)
 platforms = pygame.sprite.Group()
 groupOfGroups.append(platforms)
 
+physicist = helpers.createPlayer()
+players = pygame.sprite.Group()
+players.add(physicist)
+
 ### STARTING GAME LOOP ###
 
 
@@ -53,8 +58,9 @@ def start_game():
     while running:
 
         time = pygame.time.get_ticks()
+        events = pygame.event.get()
 
-        for event in pygame.event.get():
+        for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 
@@ -82,6 +88,10 @@ def start_game():
 
             
         screen.fill((0,0,0))
+
+        keys = pygame.key.get_pressed()
+        players.update(events, keys, platforms, groundObstacles, ground)
+        players.draw(screen)
         
         for group in groupOfGroups:
             group.update(dt)

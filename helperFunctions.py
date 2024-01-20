@@ -3,6 +3,7 @@ import numpy as np
 import os
 from ObjectClasses.BackgroundObject import BackgroundObject
 import ObjectClasses.Obstacles as Obstacles
+from ObjectClasses.player import Player as Player
 from globalVars import getVars
 
 WIDTH, HEIGHT, g_obs_dims = getVars(['width', 'height', 'g_obs_dims'])
@@ -38,3 +39,8 @@ def createMotionCaptureModel(string):
     model.vel.x = 0
 
     return model
+
+def createPlayer():
+    
+    physicist = Player(os.path.dirname(os.path.realpath(__file__)) + '/media/garfgarf.png')
+    return physicist

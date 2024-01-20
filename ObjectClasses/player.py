@@ -9,29 +9,44 @@ class Player(pygame.sprite.Sprite):
     def __init__(self,image):
         super().__init__()
         ogImage = pygame.image.load(image)
-        self.image = pygame.transform.scale(ogImage,(playerheight,playerwidth))
+        self.image = pygame.transform.scale(ogImage, (playerwidth, playerheight))
+
+        self.pos = pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
         self.vel = pygame.Vector2(0,0)
         self.acc = pygame.Vector2(0,0)
         self.rect = self.image.get_rect()
-        self.rect.center = (0,HEIGHT-100)
+        self.rect.center = (self.pos.x, self.pos.y)
         self.mass = 10
         self.charge = 1
+        self.jumping = False
 
 
-    def update(self,events,keys,platforms,obstacles):
+    def update(self, events, keys, platforms, obstacles):
+        
+        #treat landing on the ground
+        if self.pos.y + playerheight/2 > HEIGHT - 10:
+            self.pos.y = HEIGHT - 10 - playerheight/2
+            self.vel.y = 0
+            self.jumping = False
 
         #jump, hit the key once
         for event in events:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    self.vel.y = -200
+                if event.key == pygame.K_SPACE and not self.jumping:
+                    self.vel.y += -300
+                    self.jumping = True
 
-
+        #left and right motion, continuous
+        if keys[pygame.K_RIGHT]:
+            self.pos.x += PLAYERXVEL
+        if keys[pygame.K_LEFT]:
+            self.pos.x -= PLAYERXVEL
+        
         #accelerate with forces
-        self.acc = self.applyForces(['gravity'])
-        self.vel += self.acc
-        self.rect.x += self.vel.x*dt
-        self.rect.y += self.vel.y*dt
+        self.acc = self.applyForces(['gravity'])/self.mass
+        self.vel += self.acc*dt
+        self.pos += self.vel*dt
+        
         #treat the platform collisions
         for platform in platforms:
             self.landing(platform)
@@ -39,30 +54,17 @@ class Player(pygame.sprite.Sprite):
         for obstacle in obstacles:
             self.collision(obstacle)
         
-        #treat landing on the ground
-        ground = pygame.Rect(0, HEIGHT - 10, WIDTH, 10)
-        if ground.colliderect(self.rect):
-            self.rect.y = ground.top-playerheight/2
-            self.vel.y = 0
 
-        #left and right motion, continuous
-        if keys[pygame.K_RIGHT]:
-            self.rect.x += PLAYERXVEL
-        if keys[pygame.K_LEFT]:
-            self.rect.x -= PLAYERXVEL
-
-
-
-            
-                        
+        self.rect.x = self.pos.x
+        self.rect.y = self.pos.y
 
 
 
     def landing(self,platform):
         #for landing on a platform
-        if pygame.sprite.collide_mask(self,platform) and self.vel.y > 0:
-            newpos = platform.rect.top - playerheight
-            self.rect.y = newpos
+        if pygame.sprite.collide_mask(self, platform) and self.vel.y > 0:
+            newpos = platform.rect.top - playerheight/2
+            self.pos.y = newpos
             self.vel.y = 0
 
     def collision(self,obstacle):
@@ -79,18 +81,17 @@ class Player(pygame.sprite.Sprite):
 
     def applyForces(self,listofforces):
         #get accelerations
-        mass = self.mass
-        charge = self.charge
-        xacc,yacc = 0,0
+        
+        force = pygame.Vector2(0, 0)
+
         if 'gravity' in listofforces:
-            xacc += 0
-            yacc += 10
+            g = 200
+            force += pygame.Vector2(0, self.mass*g)
     
         #if 'electricity' in listofforces:
 
 
-
-        return pygame.Vector2(xacc,yacc)
+        return force
 
 
     #if force == 'electric':
