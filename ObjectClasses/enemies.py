@@ -16,20 +16,25 @@ class ChargeBullet(pygame.sprite.Sprite):
         super().__init__()
         #sign has to be 1 or -1
         self.charge = sign*permittivity
+
         if sign == 1:
             image = imagepos
         elif sign == -1:
             image = imageneg
+
         self.image = image
-        self.vel = pygame.Vector2(-500,0)
+        self.pos = pygame.Vector2(WIDTH, np.random.randint(HEIGHT/2,HEIGHT))
+        self.vel = pygame.Vector2(-200,0)
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH,np.random.randint(HEIGHT/2,HEIGHT))
+        self.rect.center = (self.pos.x, self.pos.y)
 
     def update(self,dt):
-        self.rect.x += self.vel.x*dt
-        if self.rect.x + self.image.get_width()/2 < 0:
+        self.pos.x += self.vel.x*dt
+        
+        if self.pos.x + self.image.get_width()/2 < 0:
             self.kill()
-        self.pos = pygame.Vector2(self.rect.x,self.rect.y)
+
+        self.rect.center = (self.pos.x, self.pos.y)
     
 
 

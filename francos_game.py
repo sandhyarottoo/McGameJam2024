@@ -47,7 +47,7 @@ players = pygame.sprite.Group()
 players.add(physicist)
 
 bullets = pygame.sprite.Group()
-
+groupOfGroups.append(bullets)
 
 ### STARTING GAME LOOP ###
 
@@ -103,12 +103,10 @@ def start_game():
             
         screen.fill((0,0,0))
 
-        bullets.update(dt)
-        bullets.draw(screen)
-
         keys = pygame.key.get_pressed()
-        players.update(events, keys, platforms, groundObstacles,bullets)
+        players.update(events, keys, platforms, groundObstacles, bullets)
         players.draw(screen)
+
         for player in players:
             if player.enemyCollision(bullets):
                 player.kill()
