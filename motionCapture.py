@@ -23,15 +23,31 @@ garf = helpers.createMotionCaptureModel("contraption")
 garfGroup.add(garf)
 groupOfGroups.append(garfGroup)
 
+# render the numbers for countdown
+font_size = 250
+font = pygame.font.SysFont(None, font_size)
+numba3 = font.render('3', True, (255, 255, 255))  # White color
+numba2 = font.render('2', True, (255, 255, 255))  # White color
+numba1 = font.render('1', True, (255, 255, 255))  # White color
+
+numbaDict = {1: numba1, 2: numba2, 3: numba3}
+
+
 ### STARTING GAME LOOP ###
 
 filepath = os.path.dirname(os.path.realpath(__file__)) + '/capturedAnimations/test.txt'
 file = open(filepath, 'w')
 
 capture = False
+initiateCountdown = False
+drawRed = False
+prevTime = pygame.time.get_ticks()
+secondCount = 3
 
 running = True
 while running:
+
+    time = pygame.time.get_ticks()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -39,16 +55,42 @@ while running:
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                initiateCountdown
+                initiateCountdown = True
             
-    # OBSTACLE SECTION
+    mouseX, mouseY = pygame.mouse.get_pos()
+
+    screen.fill((0,0,0))
+
+    if initiateCountdown and secondCount > 0:
+
+        screen.blit(numbaDict[secondCount], (WIDTH/2, HEIGHT/2))
+        if time - prevTime > 1000:
+            secondCount -= 1
+            prevTime = time
+        
+    if secondCount == 0:
+        secondCount = -1
+        initiateCountdown = False
+        capture = True
+        drawRed = True
+
+    if drawRed:
+        pygame.draw.rect(screen, (255,0,0), (50, 50, 100, 100))
+    
+    
 
     if capture:
-        mouseX, mouseY = pygame.mouse.get_pos()
+
+
+
+
+
+    if capture:
+        
 
 
         
-    screen.fill((0,0,0))
+    
     
     for group in groupOfGroups:
         group.update(dt)
