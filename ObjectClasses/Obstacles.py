@@ -7,7 +7,7 @@ class GroundObstacle(pygame.sprite.Sprite):
     def __init__(self, image):
         super().__init__()
 
-        self.pos = pygame.Vector2(WIDTH + image.get_width()/2, HEIGHT - image.get_height()/2)
+        self.pos = pygame.Vector2(WIDTH + image.get_width()/2, HEIGHT - 10 - image.get_height()/2)
         self.vel = pygame.Vector2(speed, 0)
 
         self.image = image

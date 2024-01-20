@@ -54,18 +54,17 @@ class Player(pygame.sprite.Sprite):
         for obstacle in obstacles:
             self.collision(obstacle)
         
-
-        self.rect.x = self.pos.x
-        self.rect.y = self.pos.y
-
+        self.rect.center = (self.pos.x, self.pos.y)
+        
 
 
-    def landing(self,platform):
+    def landing(self, platform):
         #for landing on a platform
-        if pygame.sprite.collide_mask(self, platform) and self.vel.y > 0:
+        if pygame.sprite.collide_mask(self, platform) and self.vel.y > 0 and (self.pos.y + playerheight/2) < platform.rect.top + 10 :
             newpos = platform.rect.top - playerheight/2
             self.pos.y = newpos
             self.vel.y = 0
+            self.jumping = False
 
     def collision(self,obstacle):
         #for knocking into an obstacle

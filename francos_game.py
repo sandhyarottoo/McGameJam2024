@@ -90,7 +90,7 @@ def start_game():
         screen.fill((0,0,0))
 
         keys = pygame.key.get_pressed()
-        players.update(events, keys, platforms, groundObstacles, ground)
+        players.update(events, keys, platforms, groundObstacles)
         players.draw(screen)
         
         for group in groupOfGroups:
