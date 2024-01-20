@@ -126,7 +126,7 @@ menu = pygame_menu.Menu("Main Menu", WIDTH, HEIGHT, theme=pygame_menu.themes.THE
 
 def set_sensitivity(value, sensitivity):
     changeValue('playervelocity', sensitivity)
-    print(getVars)
+    print(getVars())
 
 menu.add.button('Play', start_game)
 menu.add.selector('Sensitivity: ', [('Low', 1), ('Medium', 3), ('High', 5)], onchange=set_sensitivity)

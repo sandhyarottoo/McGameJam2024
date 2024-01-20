@@ -6,12 +6,16 @@ global_vars = {'width': 1300, 'height': 750, 'dt': 0.01,'playervelocity':5,'jump
 vars = global_vars.copy()
 
 
-def getVars(listOfNames):
+def getVars(listOfNames=None):
     '''
     takes a list of strings as input. The names should 
-    match the vars you want from the below dictionary
+    match the vars you want from the below dictionary. If None, returns the whole dictionary.
     '''
     global vars
+    
+    if listOfNames is None:
+        return vars
+    
     returned = []
 
     for name in listOfNames:
