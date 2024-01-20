@@ -25,7 +25,9 @@ groupOfGroups.append(garfGroup)
 
 ### STARTING GAME LOOP ###
 
-file = os.path.dirname(os.path.realpath(__file__)) + '/capturedAnimations/test.txt'
+filepath = os.path.dirname(os.path.realpath(__file__)) + '/capturedAnimations/test.txt'
+file = open(filepath, 'w')
+
 capture = False
 
 running = True
@@ -34,6 +36,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                initiateCountdown
             
     # OBSTACLE SECTION
 
@@ -51,14 +57,7 @@ while running:
 
     pygame.display.flip()
         
-
-# initializing menu
-menu = pygame_menu.Menu("Main Menu", WIDTH, HEIGHT, theme=pygame_menu.themes.THEME_BLUE)
-
-menu.add.button('Play', start_game)
-menu.add.button('Quit', pygame_menu.events.EXIT)
-
-menu.mainloop(screen)
+file.close()
 
 pygame.quit()
 sys.exit()

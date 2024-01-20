@@ -8,11 +8,11 @@ class BackgroundObject(pygame.sprite.Sprite):
     Should be provided with an image when created.
     '''
 
-    def __init__(self, image):
+    def __init__(self, image, speed, position):
         super().__init__()
 
-        self.pos = pygame.Vector2(WIDTH/2, HEIGHT/3)
-        self.vel = pygame.Vector2(-90, 0)
+        self.pos = position
+        self.vel = pygame.Vector2(-speed, 0)
 
         self.image = image
         self.rect = self.image.get_rect()
