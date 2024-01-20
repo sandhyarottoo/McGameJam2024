@@ -36,13 +36,14 @@ numbaDict = {1: numba1, 2: numba2, 3: numba3}
 ### STARTING GAME LOOP ###
 
 filepath = os.path.dirname(os.path.realpath(__file__)) + '/capturedAnimations/test.txt'
-file = open(filepath, 'w')
 
 capture = False
-initiateCountdown = False
 drawRed = False
-prevTime = pygame.time.get_ticks()
+initiateCountdown = False
+spacebarBinary = 0
 secondCount = 3
+
+prevTime = pygame.time.get_ticks()
 
 running = True
 while running:
@@ -55,14 +56,31 @@ while running:
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                initiateCountdown = True
+
+                # on and off switch for recording
+                if spacebarBinary % 2 == 0:
+                    file = open(filepath, 'w')
+                    fileIsOpen = True
+                    initiateCountdown = True
+                    spacebarBinary += 1
+                else:
+                    file.close()
+                    fileIsOpen = False
+                    capture = False
+                    drawRed = False
+                    secondCount = 3
+                    spacebarBinary += 1
+
             
     mouseX, mouseY = pygame.mouse.get_pos()
+    garf.pos.x = mouseX
+    garf.pos.y = mouseY
 
     screen.fill((0,0,0))
 
-    if initiateCountdown and secondCount > 0:
+    # start the countdown
 
+    if initiateCountdown and secondCount > 0:
         screen.blit(numbaDict[secondCount], (WIDTH/2, HEIGHT/2))
         if time - prevTime > 1000:
             secondCount -= 1
@@ -74,23 +92,13 @@ while running:
         capture = True
         drawRed = True
 
+    # handle the capturing
+
     if drawRed:
-        pygame.draw.rect(screen, (255,0,0), (50, 50, 100, 100))
+        pygame.draw.rect(screen, (255,0,0), (50, 50, 50, 50))
     
-    
-
     if capture:
-
-
-
-
-
-    if capture:
-        
-
-
-        
-    
+        file.write(f"({garf.pos.x},{garf.pos.y}) ")
     
     for group in groupOfGroups:
         group.update(dt)
@@ -98,8 +106,9 @@ while running:
 
 
     pygame.display.flip()
-        
-file.close()
+
+if fileIsOpen:       
+    file.close()
 
 pygame.quit()
 sys.exit()

@@ -1,7 +1,7 @@
 import pygame
 import numpy as np
 import os
-import ObjectClasses.BackgroundObject as BackgroundObject
+from ObjectClasses.BackgroundObject import BackgroundObject
 import ObjectClasses.Obstacles as Obstacles
 from globalVars import getVars
 
@@ -32,9 +32,9 @@ def createMotionCaptureModel(string):
         image = pygame.transform.scale(image, (80, 100))
 
     elif string == 'contraption':
-        image = pygame.transform.scale(image, (200, 200))
+        image = pygame.transform.scale(image, (100, 300))
     
-    model = BackgroundObject(image)
+    model = BackgroundObject(image, 20, pygame.Vector2(20, 20))
     model.vel.x = 0
 
     return model
