@@ -1,4 +1,5 @@
 import pygame
+import pygame_menu # install this using ==> pip install pygame-menu -U
 import numpy as np
 from globalVars import getVars
 from BackgroundObject import BackgroundObject
@@ -23,44 +24,56 @@ backgroundGroup.add(cat)
 
 ### STARTING GAME LOOP ###
 
+def start_game():
+    running = True
+    while running:
 
-running = True
-while running:
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-
-        # elif event.type == pygame.KEYDOWN:
-        #     if event.key == pygame.K_LEFT:
-        #         bucket.vel.x -= bucket.walkSpeed
-        #     if event.key == pygame.K_RIGHT:
-        #         bucket.vel.x += bucket.walkSpeed
-        #     if event.key == pygame.K_SPACE:
-        #         position, velocity = getInitialParams()
-        #         ball.pos = position
-        #         ball.vel = velocity
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
                 
-        # elif event.type == pygame.KEYUP:
-        #     if event.key == pygame.K_LEFT:
-        #         if pygame.key.get_pressed()[pygame.K_RIGHT]:
-        #             bucket.vel.x += bucket.walkSpeed
-        #         else:
-        #             bucket.vel.x = 0
-        #     if event.key == pygame.K_RIGHT:
-        #         if pygame.key.get_pressed()[pygame.K_LEFT]:
-        #             bucket.vel.x -= bucket.walkSpeed
-        #         else:
-        #             bucket.vel.x = 0
+            elif event.type == pygame.K_ESCAPE or pygame.K_DELETE:
+                running = False
+
+            # elif event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_LEFT:
+            #         bucket.vel.x -= bucket.walkSpeed
+            #     if event.key == pygame.K_RIGHT:
+            #         bucket.vel.x += bucket.walkSpeed
+            #     if event.key == pygame.K_SPACE:
+            #         position, velocity = getInitialParams()
+            #         ball.pos = position
+            #         ball.vel = velocity
+                    
+            # elif event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_LEFT:
+            #         if pygame.key.get_pressed()[pygame.K_RIGHT]:
+            #             bucket.vel.x += bucket.walkSpeed
+            #         else:
+            #             bucket.vel.x = 0
+            #     if event.key == pygame.K_RIGHT:
+            #         if pygame.key.get_pressed()[pygame.K_LEFT]:
+            #             bucket.vel.x -= bucket.walkSpeed
+            #         else:
+            #             bucket.vel.x = 0
+            
+
+        screen.fill((0,0,0))
+
+        backgroundGroup.update(dt)
+        backgroundGroup.draw(screen)
+
+
+        pygame.display.flip()
         
 
-    screen.fill((0,0,0))
+# initializing menu
+menu = pygame_menu.Menu("Main Menu", WIDTH, HEIGHT, theme=pygame_menu.themes.THEME_BLUE)
 
-    backgroundGroup.update(dt)
-    backgroundGroup.draw(screen)
+menu.add.button('Play', start_game)
+menu.add.button('Quit', pygame_menu.events.EXIT)
 
-
-    pygame.display.flip()
+menu.mainloop(screen)
 
 pygame.quit()
 sys.exit()
