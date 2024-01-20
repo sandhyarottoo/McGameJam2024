@@ -8,8 +8,8 @@ def getVars(listOfNames):
     
     # list of variables to return
 
-    vars = {'width': 1300, 'height': 750, 'dt': 0.01,'playerVelocity':100,'jumpVel':100, 
-            'obstacle_speed': -130, 'g_obs_dims': (60, 120), 'game_name': "Chasing the Contraption"}
+    vars = {'width': 1300, 'height': 750, 'dt': 0.01,'playervelocity':10,'jumpvel':300, 
+            'obstacle_speed': -130, 'g_obs_dims': (60, 120), 'game_name': "Chasing the Contraption",'playerheight':100,'playerwidth':100}
     
     returned = []
 
