@@ -3,6 +3,7 @@ import pygame_menu # install this using ==> pip install pygame-menu -U
 import numpy as np
 from globalVars import getVars
 from ObjectClasses.BackgroundObject import BackgroundObject
+from ObjectClasses.Contraption import Contraption
 import helperFunctions as helpers
 import sys
 import os
@@ -18,13 +19,18 @@ clock = pygame.time.Clock()
 
 groupOfGroups = []
 
-# catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
-# catImage = pygame.transform.scale(catImage, (100, 100))
+catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
+catImage = pygame.transform.scale(catImage, (100, 100))
 # cat = BackgroundObject(catImage)
 
 # backgroundGroup = pygame.sprite.Group()
 # groupOfGroups.append(backgroundGroup)
 # backgroundGroup.add(cat)
+
+characterGroup = pygame.sprite.Group()
+groupOfGroups.append(characterGroup)
+contraption = Contraption(catImage)
+characterGroup.add(contraption)
 
 groundObstacles = pygame.sprite.Group()
 groupOfGroups.append(groundObstacles)
