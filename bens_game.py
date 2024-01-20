@@ -22,7 +22,13 @@ groupOfGroups = []
 catImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/cat.png').convert_alpha()
 catImage = pygame.transform.scale(catImage, (100, 100))
 cat = BackgroundObject(catImage)
+
+
+characterGroup = pygame.sprite.Group()
+groupOfGroups.append(characterGroup)
 contraption = Contraption(catImage)
+characterGroup.add(contraption)
+
 
 backgroundGroup = pygame.sprite.Group()
 groupOfGroups.append(backgroundGroup)
@@ -47,8 +53,9 @@ def start_game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 
-            elif event.type == pygame.K_ESCAPE:
-                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
 
         if pygame.time.get_ticks() - prevTime > groundObstacleInterval:
             prevTime = pygame.time.get_ticks()
@@ -58,11 +65,12 @@ def start_game():
 
         screen.fill((0,0,0))
         
-        # for group in groupOfGroups:
-        #     group.update(dt)
-        #     group.draw(screen)
+        for group in groupOfGroups:
+            group.update(dt)
+            group.draw(screen)
             
-        contraption.update(dt)
+        # contraption.update(dt)
+        # contraption.draw(screen)
 
 
         pygame.display.flip()
