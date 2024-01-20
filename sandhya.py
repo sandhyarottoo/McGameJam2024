@@ -4,7 +4,7 @@ import pygame
 import sys
 import os
 from globalVars import getVars
-from BackgroundObject import BackgroundObject
+from ObjectClasses.BackgroundObject import BackgroundObject
 
 path = os.getcwd() + '/media/cat.png'
 print(path)

@@ -2,7 +2,7 @@ import pygame
 import pygame_menu # install this using ==> pip install pygame-menu -U
 import numpy as np
 from globalVars import getVars
-from BackgroundObject import BackgroundObject
+from ObjectClasses.BackgroundObject import BackgroundObject
 from ObjectClasses.Contraption import Contraption
 import helperFunctions as helpers
 import sys
@@ -47,7 +47,7 @@ def start_game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 
-            elif event.type == pygame.key.K_ESCAPE:
+            elif event.type == pygame.K_ESCAPE:
                 running = False
 
         if pygame.time.get_ticks() - prevTime > groundObstacleInterval:

@@ -25,6 +25,6 @@ class Contraption(pygame.sprite.Sprite):
     
     def update(self, dt):
 
-        self.pos.x = WIDTH/2 + 100*np.cos(100*dt)
-        self.pos.y = HEIGHT/2 + 100*np.sin(100*dt)
+        self.pos.x += 10*dt# 100*np.cos(1000*dt)
+        self.pos.y = HEIGHT/2 #+ 100*np.sin(1000*dt)
         self.rect.center = (self.pos.x, self.pos.y)
