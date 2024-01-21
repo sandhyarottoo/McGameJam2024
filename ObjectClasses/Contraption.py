@@ -12,7 +12,7 @@ class Contraption(pygame.sprite.Sprite):
     Class for the contraption. 
     '''
 
-    def __init__(self, image):
+    def __init__(self, images):
         super().__init__()
 
         self.xtimeParam = 0
@@ -26,12 +26,35 @@ class Contraption(pygame.sprite.Sprite):
         
         self.moveType = "hovering"
         
-        self.image = image
+        self.images = images
+        self.image = images[0]
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x, self.pos.y)
+        
+        # for animation
+        self.dtime= 0
+        self.index = 0
     
     
     def update(self, physicist, dt):
+        
+        if self.index == 0:
+            if self.dtime >  600*dt: 
+                self.image = self.images[1]
+                self.index += 1
+                self.dtime = 0
+        elif self.index == 1:
+            if self.dtime >  200*dt: 
+                self.image = self.images[2]
+                self.index = 0
+                self.dtime = 0
+        else:
+            if self.dtime >  50*dt: 
+                self.image = self.images[0]
+                self.index += 1
+                self.dtime = 0
+                
+        self.dtime += dt
         
         if self.moveType == "hovering":
             

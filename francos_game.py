@@ -34,6 +34,12 @@ platformImage = pygame.transform.scale(platformImage, (80, 20))
 playerIMGS = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run1.png').convert_alpha(),
               pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run2.png').convert_alpha()]
 
+contraptionIMGs = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Cube1.png').convert_alpha(),
+                    pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Cube2.png').convert_alpha(),
+                    pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Cube3.png').convert_alpha()]
+for i, cont in enumerate(contraptionIMGs):
+    contraptionIMGs[i] = pygame.transform.scale(cont, (100, 100))
+
 # importing books for platform
 BookIMGs = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Feynman.png').convert_alpha(),
             pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Griffiths.png').convert_alpha(),
@@ -61,7 +67,7 @@ platforms = pygame.sprite.Group()
 groupOfGroups.append(platforms)
 
 contraptionGroup = pygame.sprite.Group()
-contraption = Contraption(catImage)
+contraption = Contraption(contraptionIMGs)
 contraptionGroup.add(contraption)
 
 physicist = player.Player(playerIMGS)
@@ -70,6 +76,9 @@ players.add(physicist)
 
 backgroundIMG = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Background_lvl1.png').convert_alpha()
 backgroundIMG = pygame.transform.scale(backgroundIMG, (2*WIDTH, HEIGHT))
+
+bossBackgroundIMG = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Background_BossFight.png').convert_alpha()
+bossBackgroundIMG = pygame.transform.scale(bossBackgroundIMG, (WIDTH, HEIGHT))
 
 life1,life2,life3 = helpers.createLife()
 health = pygame.sprite.Group()
