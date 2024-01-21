@@ -82,7 +82,7 @@ class Laser(pygame.sprite.Sprite):
 
 
 class LaserWarning(pygame.sprite.Sprite):
-    def __init__(self,radius,posx,posy):
+    def __init__(self,radius,laser):
         self.image = pygame.Surface((radius,radius))
         self.image.fill((255,0,0))
         self.rect = self.image.get_rect()
