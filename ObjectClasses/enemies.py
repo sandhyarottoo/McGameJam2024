@@ -87,7 +87,7 @@ class LaserWarning(pygame.sprite.Sprite):
         self.image = pygame.Surface((radius,radius))
         self.image.fill((255,0,0))
         self.rect = self.image.get_rect()
-        self.rect.center = (posx,posy)
+        self.rect.center = (laser.pos.x,laser.pos.y)
         self.producedLaser = False
 
 
