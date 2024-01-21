@@ -120,7 +120,7 @@ def start_game():
         time = pygame.time.get_ticks()
         events = pygame.event.get()
 
-        if time - startTime > 9000:
+        if time - startTime > 30000:
             running = False
 
         for event in events:
