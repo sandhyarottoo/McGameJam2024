@@ -213,6 +213,8 @@ def start_game():
                     running = False
 
         screen.fill((0,0,0))
+        
+        screen.blit(bossBackgroundIMG, (0,0))
 
         if time - prevBulletTime > bulletInterval and contraption.readyToFire:
             prevBulletTime = time
