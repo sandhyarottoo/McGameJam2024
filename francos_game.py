@@ -6,6 +6,7 @@ from ObjectClasses.BackgroundObject import BackgroundObject
 from ObjectClasses.Contraption import Contraption
 import ObjectClasses.player as player
 import helperFunctions as helpers
+import ast
 import sys
 import os
 
@@ -48,10 +49,9 @@ groupOfGroups.append(groundObstacles)
 platforms = pygame.sprite.Group()
 groupOfGroups.append(platforms)
 
-characterGroup = pygame.sprite.Group()
-groupOfGroups.append(characterGroup)
+contraptionGroup = pygame.sprite.Group()
 contraption = Contraption(catImage)
-characterGroup.add(contraption)
+contraptionGroup.add(contraption)
 
 physicist = helpers.createPlayer()
 players = pygame.sprite.Group()
@@ -130,11 +130,26 @@ def start_game():
         for group in groupOfGroups:
             group.update(dt)
             group.draw(screen)
-
+        
+        contraptionGroup.update(dt)
+        contraptionGroup.draw(screen)
 
         pygame.display.flip()
     
     ### PART 2 ###
+    
+    for group in groupOfGroups:
+        group.empty()
+    
+    with open(os.path.dirname(os.path.realpath(__file__)) + '/capturedAnimations/test.txt') as f:
+        lines = f.readlines()
+        listOfBossPositions = lines[0].split()
+        listOfBossPositions = [ast.literal_eval(item) for item in listOfBossPositions]
+        numOfBossPositions = len(listOfBossPositions)
+    
+    #contraption.pos
+
+    count = numOfBossPositions
 
     running = True
     while running:
@@ -150,27 +165,22 @@ def start_game():
                 if event.key == pygame.K_ESCAPE:
                     running = False
 
-
-        # bullets
-        bulletInterval = np.random.randint(3000,4000)
-        if time - prevBulletTime > bulletInterval:
-            prevBulletTime = time
-            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
-            bullets.add(bullet)
-            
         screen.fill((0,0,0))
 
         keys = pygame.key.get_pressed()
         players.update(events, keys, platforms, groundObstacles, bullets)
         players.draw(screen)
-
-        for player in players:
-            if player.enemyCollision(bullets):
-                player.kill()
         
         for group in groupOfGroups:
             group.update(dt)
             group.draw(screen)
+        
+        if count > 0:
+            count -= 1
+            contraption.pos.x = 
+
+        contraptionGroup.update(dt)
+        contraptionGroup.draw(screen)
 
 
         pygame.display.flip()
