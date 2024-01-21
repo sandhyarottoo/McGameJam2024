@@ -21,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.mass = 10
         self.charge = 1
         self.jumping = False
+        self.health = 3
 
 
     def update(self, events, keys, platforms, obstacles,bullets):
@@ -93,6 +94,7 @@ class Player(pygame.sprite.Sprite):
         for enemy in enemies:
             if pygame.sprite.collide_mask(self,enemy):
                 return True
+
         
 
     def applyForces(self, listofforces, bullets):
@@ -108,11 +110,32 @@ class Player(pygame.sprite.Sprite):
                 r = bullet.pos-self.pos
                 bulletCharge = bullet.charge
                 abs_r_sq = r.x**2 + r.y**2
-                force += (900000000*bulletCharge*self.charge/(abs_r_sq*np.sqrt(abs_r_sq)))*r.normalize()
+                force += (900000000*bulletCharge*self.charge/abs_r_sq)*r.normalize()
             
         return force
 
 
+
+class PlayerHealth(pygame.sprite.Sprite):
+    def __init__(self,image,posx,posy):
+        heartcounter = 0
+        super().__init__()
+        ogImage = pygame.image.load(image)
+        self.image = pygame.transform.scale(ogImage, (20, 20))
+        self.pos = pygame.Vector2(posx,posy)
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.pos.x, self.pos.y)
+        heartcounter += 1
+        self.number = heartcounter
+
+    def update(self,player):
+        if player.health == 2 and self.number ==3: 
+            self.kill()
+        if player.health == 1 and self.number == 2:
+            self.kill()
+        if player.health == 0 and self.number == 1:
+            self.kill()
+            player.kill()
 
 
 
