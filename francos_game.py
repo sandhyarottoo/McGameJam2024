@@ -21,8 +21,8 @@ clock = pygame.time.Clock()
 
 ### loading images ###
 
-imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Soccer_Ball.png').convert_alpha()
-imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Basketball_PNG.png').convert_alpha()
+imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/bullet_neg.png').convert_alpha()
+imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/bullet_plus.png').convert_alpha()
 imageneg = pygame.transform.scale(imageneg, (50, 20))
 imagepos = pygame.transform.scale(imagepos, (50, 20))
 
