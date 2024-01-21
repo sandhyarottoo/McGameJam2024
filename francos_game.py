@@ -126,12 +126,12 @@ def start_game():
             
         screen.fill((0,0,0))
 
+        health.draw(screen)
         keys = pygame.key.get_pressed()
-        players.update(events, keys, platforms, groundObstacles, bullets)
         for life in health:
             life.update(players)
+        players.update(events, keys, platforms, groundObstacles, bullets)
         players.draw(screen)
-        health.draw(screen)
         
         for group in groupOfGroups:
             group.update(dt)

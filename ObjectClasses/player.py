@@ -63,7 +63,7 @@ class Player(pygame.sprite.Sprite):
                 self.health -= 1
                 self.respawn = True
                 print('health:{}'.format(self.health))
-        if  self.respawn:
+        if self.respawn:
             self.pos = pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
             self.vel = pygame.Vector2(10,0)
             self.respawn = False
