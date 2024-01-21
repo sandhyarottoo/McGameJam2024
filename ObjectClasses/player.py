@@ -104,8 +104,21 @@ class Player(pygame.sprite.Sprite):
             self.vel += self.acc*dt
             self.pos += self.vel*dt
         
-        elif self.moveType == 'flying':
-            pass
+        elif self.moveType == 'flying':         
+            self.pos.y -= 2*(HEIGHT/2 - self.pos.y)*dt
+            
+            if keys[pygame.K_RIGHT]:
+                self.pos.x += PLAYERXVEL
+            if keys[pygame.K_LEFT]:
+                self.pos.x -= PLAYERXVEL
+            if keys[pygame.K_UP]:
+                self.pos.y -= PLAYERXVEL
+            if keys[pygame.K_DOWN]:
+                self.pos.y += PLAYERXVEL
+            
+            
+            
+            
         
 
         self.rect.center = (self.pos.x, self.pos.y)
