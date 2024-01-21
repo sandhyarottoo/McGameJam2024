@@ -30,6 +30,9 @@ groundObjectImage = pygame.transform.scale(groundObjectImage, g_obs_dims)
 platformImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/lebron.jpeg').convert_alpha()
 platformImage = pygame.transform.scale(platformImage, (80, 20))
 
+playerIMGS = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run1.png').convert_alpha(),
+              pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run2.png').convert_alpha()]
+
 ### OBJECT SETUP ###
 
 groupOfGroups = []
@@ -53,7 +56,7 @@ contraptionGroup = pygame.sprite.Group()
 contraption = Contraption(catImage)
 contraptionGroup.add(contraption)
 
-physicist = helpers.createPlayer()
+physicist = player.Player(playerIMGS)
 players = pygame.sprite.Group()
 players.add(physicist)
 

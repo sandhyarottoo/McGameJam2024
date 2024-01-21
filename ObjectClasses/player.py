@@ -8,11 +8,13 @@ from globalVars import getVars
 WIDTH, HEIGHT, dt, PLAYERYVEL, playerheight, playerwidth = getVars(['width', 'height', 'dt','jumpvel', 'playerheight', 'playerwidth'])
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self,image):
+    def __init__(self,images):
         super().__init__()
-        ogImage = pygame.image.load(image)
-        self.image = pygame.transform.scale(ogImage, (playerwidth, playerheight))
-
+        for i, img in enumerate(images):
+            images[i] = pygame.transform.scale(img, (playerwidth, playerheight))
+        
+        self.images = images
+        self.image = images[0]
         self.pos = pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
         self.vel = pygame.Vector2(0,0)
         self.acc = pygame.Vector2(0,0)
@@ -22,9 +24,22 @@ class Player(pygame.sprite.Sprite):
         self.charge = 1
         self.jumping = False
         self.health = 3
+        
+        # for animation
+        self.dtime= 0
+        self.index = 0
 
 
     def update(self, events, keys, platforms, obstacles,bullets):
+        
+        if self.dtime >  100*dt: 
+            self.image = self.images[self.index]
+            self.index += 1
+            self.dtime = 0
+            if self.index > 1:
+                self.index = 0
+            
+        self.dtime += dt
         
         PLAYERXVEL = getVars(['playervelocity'])[0]
         
