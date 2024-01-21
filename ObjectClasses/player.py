@@ -3,7 +3,7 @@ import numpy as np
 import os
 from globalVars import getVars
 
-
+PLAYERXVEL = getVars(['playervelocity'])[0]
 
 WIDTH, HEIGHT, dt, PLAYERYVEL, playerheight, playerwidth, g = getVars(['width', 'height', 'dt','jumpvel', 'playerheight', 'playerwidth', 'g'])
 
@@ -43,8 +43,6 @@ class Player(pygame.sprite.Sprite):
                     self.index = 0
                 
             self.dtime += dt
-            
-            PLAYERXVEL = getVars(['playervelocity'])[0]
             
             #treat landing on the ground
             if self.pos.y + playerheight/2 > HEIGHT - 10:
@@ -90,10 +88,27 @@ class Player(pygame.sprite.Sprite):
             self.vel += self.acc*dt
             self.pos += self.vel*dt
             
-            self.rect.center = (self.pos.x, self.pos.y)
 
         elif self.moveType == "boss cutscene":
+            #treat landing on the ground
+            if self.pos.y + playerheight/2 > HEIGHT - 10:
+                self.vel.x *= 0.9
+                self.pos.y = HEIGHT - 10 - playerheight/2
+                self.vel.y = 0
+                self.jumping = False
+
             self.pos.x += 2*(WIDTH/4 - self.pos.x)*dt
+
+            #accelerate with forces
+            self.acc = self.applyForces(['gravity', 'electricity'], bullets)/self.mass
+            self.vel += self.acc*dt
+            self.pos += self.vel*dt
+        
+        elif self.moveType == 'flying':
+            pass
+        
+
+        self.rect.center = (self.pos.x, self.pos.y)
         
 
     def landing(self, platform, dt):
