@@ -14,7 +14,7 @@ WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL = getVars(['width', 'height', 'dt','pla
 #imagepos = positive charge
 #imageneg = negative charge
 
-# 1 <3 u
+# 1 <3 peeny
 
 class ChargeBullet(pygame.sprite.Sprite):
     def __init__(self,sign,imagepos,imageneg,xpos,ypos):
