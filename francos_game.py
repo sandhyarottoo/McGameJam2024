@@ -88,7 +88,7 @@ def start_game():
         time = pygame.time.get_ticks()
         events = pygame.event.get()
 
-        if time - startTime > 8000:
+        if time - startTime > 10000:
             running = False
 
         for event in events:
@@ -144,13 +144,12 @@ def start_game():
     
     ### PART 2 ###
     
-    for group in groupOfGroups:
-        group.empty()
     
     with open(os.path.dirname(os.path.realpath(__file__)) + '/capturedAnimations/test.txt') as f:
         lines = f.readlines()
         listOfBossPositions = lines[0].split()
         listOfBossPositions = [ast.literal_eval(item) for item in listOfBossPositions]
+        listOfBossPositions = listOfBossPositions[:-350]
         numOfBossPositions = len(listOfBossPositions)
     
     xDiff = contraption.pos.x - listOfBossPositions[0][0]
