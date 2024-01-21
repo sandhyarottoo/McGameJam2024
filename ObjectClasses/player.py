@@ -62,6 +62,7 @@ class Player(pygame.sprite.Sprite):
             if self.enemyCollision(bullet):
                 self.health -= 1
                 self.respawn = True
+                print(self.health)
 
         #jump, hit the key once
         for event in events:
@@ -152,11 +153,12 @@ class PlayerHealth(pygame.sprite.Sprite):
         for player in players:
             if player.health == 2 and self.number ==3: 
                 self.kill()
-            if player.health == 1 and self.number == 2:
+            elif player.health == 1 and self.number == 2:
                 self.kill()
-            if player.health == 0 and self.number == 1:
+            elif player.health == 0 and self.number == 1:
                 self.kill()
                 player.kill()
+        #LALALALALALALA
 
 
 
