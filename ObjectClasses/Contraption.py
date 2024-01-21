@@ -17,7 +17,7 @@ class Contraption(pygame.sprite.Sprite):
 
         self.xtimeParam = 0
         self.ytimeParam = 0
-        self.anchorPoint = pygame.Vector2(19/20*WIDTH - 8, 4/10*HEIGHT)
+        self.anchorPoint = pygame.Vector2(19/20*WIDTH - 8, 6/10*HEIGHT)
         self.amplitude = 25
         self.pos = pygame.Vector2(19/20*WIDTH, 4/10*HEIGHT)
         self.vel = pygame.Vector2(0, 0)
@@ -43,18 +43,7 @@ class Contraption(pygame.sprite.Sprite):
                 self.ytimeParam = 0
 
             self.pos.x = self.anchorPoint.x + (self.amplitude/2)*np.sin(self.xtimeParam)
-            self.pos.y = self.anchorPoint.y + (self.amplitude)*np.sin(2*self.ytimeParam)
+            self.pos.y = self.anchorPoint.y + (3*self.amplitude)*np.sin(2*self.ytimeParam)
 
             self.rect.center = (self.pos.x, self.pos.y)
             
-            # if self.pos.x > 19/20*WIDTH and self.vel.x > 0:
-            #     self.vel.x *= -1
-            
-            # if self.pos.x < 17/20*WIDTH and self.vel.x < 0:
-            #     self.vel.x *= -1
-
-            # if self.pos.y > 5/10*HEIGHT and self.vel.y > 0:
-            #     self.vel.y *= -1
-            
-            # if self.pos.y < 4/10*HEIGHT and self.vel.y < 0:
-            #     self.vel.y *= -1

@@ -9,7 +9,7 @@ WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL = getVars(['width', 'height', 'dt','pla
 #imageneg = negative charge
 
 class ChargeBullet(pygame.sprite.Sprite):
-    def __init__(self,sign,imagepos,imageneg):
+    def __init__(self,sign,imagepos,imageneg, xpos, ypos):
         super().__init__()
 
         permittivity = 10
@@ -22,7 +22,7 @@ class ChargeBullet(pygame.sprite.Sprite):
             image = imageneg
 
         self.image = image
-        self.pos = pygame.Vector2(WIDTH, np.random.randint(HEIGHT/2,HEIGHT))
+        self.pos = pygame.Vector2(xpos, ypos)
         self.vel = pygame.Vector2(-200,0)
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x, self.pos.y)

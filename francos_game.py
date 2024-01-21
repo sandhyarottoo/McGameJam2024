@@ -38,16 +38,9 @@ catImage = pygame.transform.scale(catImage, (100, 100))
 
 character = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_v1.png').convert_alpha()
 character = pygame.transform.scale(character, (100, 100))
-# cat = BackgroundObject(catImage)
 
-# backgroundGroup = pygame.sprite.Group()
-# groupOfGroups.append(backgroundGroup)
-# backgroundGroup.add(cat)
-
-characterGroup = pygame.sprite.Group()
-groupOfGroups.append(characterGroup)
-contraption = Contraption(catImage)
-characterGroup.add(contraption)
+bullets = pygame.sprite.Group()
+groupOfGroups.append(bullets)
 
 groundObstacles = pygame.sprite.Group()
 groupOfGroups.append(groundObstacles)
@@ -55,12 +48,14 @@ groupOfGroups.append(groundObstacles)
 platforms = pygame.sprite.Group()
 groupOfGroups.append(platforms)
 
+characterGroup = pygame.sprite.Group()
+groupOfGroups.append(characterGroup)
+contraption = Contraption(catImage)
+characterGroup.add(contraption)
+
 physicist = helpers.createPlayer()
 players = pygame.sprite.Group()
 players.add(physicist)
-
-bullets = pygame.sprite.Group()
-groupOfGroups.append(bullets)
 
 ### STARTING GAME LOOP ###
 
@@ -73,7 +68,7 @@ def start_game():
     platformsToAdd = 0
 
     bulletTime = 0
-    bulletInterval = np.random.randint(3000,4000)
+    bulletInterval = 3000
     prevBulletTime = pygame.time.get_ticks()
 
     running = True
@@ -109,10 +104,10 @@ def start_game():
                 platformsToAdd -= 1
 
         # bullets
-
+        bulletInterval = np.random.randint(3000,4000)
         if time - prevBulletTime > bulletInterval:
             prevBulletTime = time
-            bullet = helpers.createBullet(imagepos, imageneg)
+            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
             bullets.add(bullet)
             
         screen.fill((0,0,0))

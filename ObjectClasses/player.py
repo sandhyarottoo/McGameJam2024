@@ -108,16 +108,12 @@ class Player(pygame.sprite.Sprite):
                 r = bullet.pos-self.pos
                 bulletCharge = bullet.charge
                 abs_r_sq = r.x**2 + r.y**2
-                force += (20000000*bulletCharge*self.charge/abs_r_sq)*r.normalize()
+                force += (900000000*bulletCharge*self.charge/(abs_r_sq*np.sqrt(abs_r_sq)))*r.normalize()
             
         return force
 
 
 
-    #if force == 'electric':
-
-# def infinitePlane(player):
-#     #for an infinite charged plane on the ground
 
 
 
