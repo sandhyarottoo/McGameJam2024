@@ -147,9 +147,11 @@ def start_game():
         listOfBossPositions = [ast.literal_eval(item) for item in listOfBossPositions]
         numOfBossPositions = len(listOfBossPositions)
     
-    #contraption.pos
+    xDiff = contraption.pos.x - listOfBossPositions[0][0]
+    yDiff = contraption.pos.y - listOfBossPositions[0][1]
 
-    count = numOfBossPositions
+    count = 0
+    contraption.moveType = " "
 
     running = True
     while running:
@@ -175,9 +177,12 @@ def start_game():
             group.update(dt)
             group.draw(screen)
         
-        if count > 0:
-            count -= 1
-            contraption.pos.x = 
+        if count < numOfBossPositions:
+            contraption.pos.x = listOfBossPositions[count][0] + xDiff
+            contraption.pos.y = listOfBossPositions[count][1] + yDiff
+            count += 1
+        else:
+            contraption.moveType = "hovering"
 
         contraptionGroup.update(dt)
         contraptionGroup.draw(screen)

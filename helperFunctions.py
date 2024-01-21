@@ -38,7 +38,7 @@ def createMotionCaptureModel(string):
     elif string == 'contraption':
         image = pygame.transform.scale(image, (100, 300))
     
-    model = BackgroundObject(image, 20, pygame.Vector2(20, 20))
+    model = BackgroundObject(image)
     model.vel.x = 0
 
     return model
