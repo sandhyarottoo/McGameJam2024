@@ -1,7 +1,7 @@
 # list of variables to return
-global_vars = {'width': 1300, 'height': 750, 'dt': 0.01,'playervelocity':5,'jumpvel':300, 
+global_vars = {'width': 1300, 'height': 750, 'dt': 0.01,'playervelocity':5,'jumpvel':400, 
         'obstacle_speed': -130, 'g_obs_dims': (133, 160), 'game_name': "Chasing the Contraption",
-        'playerheight':250,'playerwidth':135, 'g': 220}
+        'playerheight':200,'playerwidth':105, 'g': 220}
 
 vars = global_vars.copy()
 

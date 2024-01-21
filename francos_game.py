@@ -207,7 +207,7 @@ def start_game():
     physicist.moveType = "boss cutscene"
 
     prevBulletTime = pygame.time.get_ticks()
-    bulletInterval = 1500
+    bulletInterval = 1000
 
     running = True
     while running:
