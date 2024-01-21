@@ -139,7 +139,6 @@ class Player(pygame.sprite.Sprite):
                     audioFunctions.playHurt()
                     self.health -= 1
                     self.respawn = True
-                    print('health:{}'.format(self.health))
             if self.respawn:
                 self.pos = pygame.Vector2(WIDTH/2, HEIGHT - 10 - playerheight/2)
                 self.vel = pygame.Vector2(10,0)
@@ -230,17 +229,14 @@ class PlayerHealth(pygame.sprite.Sprite):
         for player in players:
             if self.number == 3:
                 if player.health == 2:
-                    print('number:{}'.format(self.number),'health in number:{}'.format(player.health))
                     self.kill()
             elif self.number == 2:
                 if player.health == 1:
                     self.kill()
-                    print('number:{}'.format(self.number),'health in number:{}'.format(player.health))
             elif self.number == 1:
                 if player.health == 0:
                     self.kill()
-                    print('number:{}'.format(self.number),'health in number:{}'.format(player.health))
-                    player.kill()
+                    #player.kill()
 
 
 

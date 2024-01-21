@@ -11,6 +11,7 @@ import sys
 import os
 import random
 import audioFunctions
+import time as pythonTime
 
 WIDTH, HEIGHT, dt, g_obs_dims, obstacleVel = getVars(['width', 'height', 'dt', 'g_obs_dims', 'obstacle_speed'])
 
@@ -20,7 +21,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 pygame.font.init()
-endText = pygame.font.SysFont('verdana',10).render('LOSER',False,(250,220,210))
+endText = pygame.font.SysFont('verdana',20).render('LOSER. Press escape to return to menu.',False,(250,220,210))
 
 
 ### loading images ###
@@ -104,7 +105,7 @@ def start_game():
     platformsToAdd = 0
 
     bulletTime = 0
-    bulletInterval = 4000
+    bulletInterval = 3000
     prevBulletTime = pygame.time.get_ticks()
     
      # background x positions
@@ -187,7 +188,7 @@ def start_game():
                 screen.blit(endText,(WIDTH/2,HEIGHT/2))
 
         pygame.display.flip()
-        clock.tick(120)
+        clock.tick(240)
     
     ### PART 2 ###
     
@@ -207,7 +208,7 @@ def start_game():
     physicist.moveType = "boss cutscene"
 
     prevBulletTime = pygame.time.get_ticks()
-    bulletInterval = 1000
+    bulletInterval = 500
 
     running = True
     while running:
@@ -256,11 +257,30 @@ def start_game():
         
         for player in players:
             if player.health == 0:
-                screen.fill((0,0,0))
-                screen.blit(endText,(WIDTH/2,HEIGHT/2))
+                player.kill()
+                running = False
 
         pygame.display.flip()
-        clock.tick(120)
+        clock.tick(240)
+        
+    running = True
+    while running:
+        screen.fill((0,0,0))
+        screen.blit(endText,(WIDTH/2-endText.get_width()/2,HEIGHT/2))
+        
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                    return
+        
+        pygame.display.flip()
+        clock.tick(240)
+        
+        
         
 
 # initializing menu
@@ -271,7 +291,7 @@ def set_sensitivity(value, sensitivity):
     print(getVars())
 
 menu.add.button('Play', start_game)
-menu.add.selector('Sensitivity: ', [('Low', 1), ('Medium', 3), ('High', 5)], onchange=set_sensitivity)
+menu.add.selector('Sensitivity: ', [('High', 5), ('Medium', 3), ('Low', 1)], onchange=set_sensitivity)
 menu.add.button('Quit', pygame_menu.events.EXIT)
 
 menu.mainloop(screen)
