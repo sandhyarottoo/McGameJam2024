@@ -121,7 +121,7 @@ def start_game():
         bulletInterval = np.random.randint(3000,4000)
         if time - prevBulletTime > bulletInterval:
             prevBulletTime = time
-            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
+            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y,'level')
             bullets.add(bullet)
             
         screen.fill((0,0,0))

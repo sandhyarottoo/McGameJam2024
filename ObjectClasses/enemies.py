@@ -9,7 +9,7 @@ WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL = getVars(['width', 'height', 'dt','pla
 #imageneg = negative charge
 
 class ChargeBullet(pygame.sprite.Sprite):
-    def __init__(self,sign,imagepos,imageneg, xpos, ypos):
+    def __init__(self,sign,imagepos,imageneg, xpos, ypos,mode):
         super().__init__()
 
         permittivity = 10
@@ -23,7 +23,12 @@ class ChargeBullet(pygame.sprite.Sprite):
 
         self.image = image
         self.pos = pygame.Vector2(xpos, ypos)
-        self.vel = pygame.Vector2(-300,0)
+        if mode == 'level':    
+            self.vel = pygame.Vector2(-300,0)
+        if mode == 'bossfight':
+            #generate a random angle between 0 and pi
+            angle = np.random.random()*np.pi
+            self.vel = 300*pygame.Vector2(np.cos(angle),np.sin(angle))
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x, self.pos.y)
 
