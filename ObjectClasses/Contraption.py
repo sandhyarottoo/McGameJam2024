@@ -46,18 +46,24 @@ class Contraption(pygame.sprite.Sprite):
             self.pos.y = self.anchorPoint.y + (3*self.amplitude)*np.sin(2*self.ytimeParam)
 
         
-        if self.moveType == "standing":
+        if self.moveType == "centering":
             self.acc.y = g
             self.vel += self.acc*dt
             self.pos += self.vel*dt
+
+            self.pos.x += (WIDTH/2 - self.pos.x)*dt
             
             if self.pos.y + self.image.get_height()/2 > HEIGHT - 10:
                 self.pos.y = HEIGHT - 10 - self.image.get_height()/2
+                self.vel.y = 0
+            
+            if abs(self.pos.x - WIDTH/2) < 2:
                 self.vel = pygame.Vector2(0, 0)
                 self.acc = pygame.Vector2(0, 0)
-                self.moveType = "centering"
+                self.moveType = "standing"
             
-        #if self.moveType == "centering":
+        if self.moveType == "standing":
+            pass
         
         self.rect.center = (self.pos.x, self.pos.y)
 

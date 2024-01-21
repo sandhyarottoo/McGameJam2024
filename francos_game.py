@@ -186,8 +186,9 @@ def start_game():
             contraption.pos.x = listOfBossPositions[count][0] + xDiff
             contraption.pos.y = listOfBossPositions[count][1] + yDiff
             count += 1
-        else:
-            contraption.moveType = "standing"
+        elif count == numOfBossPositions:
+            count += 1
+            contraption.moveType = "centering"
 
         contraptionGroup.update(dt)
         contraptionGroup.draw(screen)
