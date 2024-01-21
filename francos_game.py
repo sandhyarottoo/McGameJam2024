@@ -60,6 +60,10 @@ physicist = player.Player(playerIMGS)
 players = pygame.sprite.Group()
 players.add(physicist)
 
+life1,life2,life3 = helpers.createLife()
+health = pygame.sprite.Group()
+health.add(life1,life2,life3)
+
 ### STARTING GAME LOOP ###
 
 def start_game():
@@ -124,7 +128,10 @@ def start_game():
 
         keys = pygame.key.get_pressed()
         players.update(events, keys, platforms, groundObstacles, bullets)
+        for life in health:
+            life.update(players)
         players.draw(screen)
+        health.draw(screen)
         
         for group in groupOfGroups:
             group.update(dt)

@@ -46,6 +46,7 @@ class Player(pygame.sprite.Sprite):
         
         #treat landing on the ground
         if self.pos.y + playerheight/2 > HEIGHT - 10:
+            self.vel.x *= 0.9
             self.pos.y = HEIGHT - 10 - playerheight/2
             self.vel.y = 0
             self.jumping = False
@@ -61,11 +62,6 @@ class Player(pygame.sprite.Sprite):
             if self.enemyCollision(bullet):
                 self.health -= 1
                 self.respawn = True
-
-        if self.respawn:
-            print('respawned')
-            self.rect.center = pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
-            self.respawn = False
 
         #jump, hit the key once
         for event in events:
@@ -135,6 +131,7 @@ class Player(pygame.sprite.Sprite):
                 bulletCharge = bullet.charge
                 abs_r_sq = np.sqrt(r.x**2 + r.y**2)
                 force += (900000000*bulletCharge*self.charge/(abs_r_sq)**3)*r.normalize()
+    
             
         return force
 
@@ -144,22 +141,22 @@ class PlayerHealth(pygame.sprite.Sprite):
     def __init__(self,image,posx,posy):
         heartcounter = 0
         super().__init__()
-        ogImage = pygame.image.load(image)
-        self.image = pygame.transform.scale(ogImage, (20, 20))
+        self.image = pygame.transform.scale(image, (20, 20))
         self.pos = pygame.Vector2(posx,posy)
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x, self.pos.y)
         heartcounter += 1
         self.number = heartcounter
 
-    def update(self,player):
-        if player.health == 2 and self.number ==3: 
-            self.kill()
-        if player.health == 1 and self.number == 2:
-            self.kill()
-        if player.health == 0 and self.number == 1:
-            self.kill()
-            player.kill()
+    def update(self,players):
+        for player in players:
+            if player.health == 2 and self.number ==3: 
+                self.kill()
+            if player.health == 1 and self.number == 2:
+                self.kill()
+            if player.health == 0 and self.number == 1:
+                self.kill()
+                player.kill()
 
 
 
