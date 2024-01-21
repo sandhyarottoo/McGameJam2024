@@ -25,6 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.jumping = False
         self.health = 3
         self.respawn = False
+        self.moveType = 'running'
         
         # for animation
         self.dtime= 0
@@ -33,61 +34,66 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, events, keys, platforms, obstacles,bullets):
         
-        if self.dtime >  100*dt: 
-            self.image = self.images[self.index]
-            self.index += 1
-            self.dtime = 0
-            if self.index > 1:
-                self.index = 0
+        if self.moveType == 'running':
+            if self.dtime >  100*dt: 
+                self.image = self.images[self.index]
+                self.index += 1
+                self.dtime = 0
+                if self.index > 1:
+                    self.index = 0
+                
+            self.dtime += dt
             
-        self.dtime += dt
-        
-        PLAYERXVEL = getVars(['playervelocity'])[0]
-        
-        #treat landing on the ground
-        if self.pos.y + playerheight/2 > HEIGHT - 10:
-            self.vel.x *= 0.9
-            self.pos.y = HEIGHT - 10 - playerheight/2
-            self.vel.y = 0
-            self.jumping = False
-        
-        #treat the platform collisions
-        for platform in platforms:
-            self.landing(platform, dt)
-        #treat the obstacle collisions
-        for obstacle in obstacles:
-            self.collision(obstacle, dt)
+            PLAYERXVEL = getVars(['playervelocity'])[0]
+            
+            #treat landing on the ground
+            if self.pos.y + playerheight/2 > HEIGHT - 10:
+                self.vel.x *= 0.9
+                self.pos.y = HEIGHT - 10 - playerheight/2
+                self.vel.y = 0
+                self.jumping = False
+            
+            #treat the platform collisions
+            for platform in platforms:
+                self.landing(platform, dt)
+            #treat the obstacle collisions
+            for obstacle in obstacles:
+                self.collision(obstacle, dt)
 
-        for bullet in bullets: 
-            if self.enemyCollision(bullet):
-                self.health -= 1
-                self.respawn = True
-                print('health:{}'.format(self.health))
-        if self.respawn:
-            self.pos = pygame.Vector2(WIDTH/2, HEIGHT - 10 - playerheight/2)
-            self.vel = pygame.Vector2(10,0)
-            self.respawn = False
+            for bullet in bullets: 
+                if self.enemyCollision(bullet):
+                    self.health -= 1
+                    self.respawn = True
+                    print('health:{}'.format(self.health))
+            if self.respawn:
+                self.pos = pygame.Vector2(WIDTH/2, HEIGHT - 10 - playerheight/2)
+                self.vel = pygame.Vector2(10,0)
+                self.respawn = False
 
-        #jump, hit the key once
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and not self.jumping:
-                    self.vel.y += -300
-                    self.jumping = True
-        
+            #jump, hit the key once
+            for event in events:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE and not self.jumping:
+                        self.vel.y += -300
+                        self.jumping = True
+            
+            
+            #left and right motion, continuous
+            if keys[pygame.K_RIGHT] and self.pos.x <= 2*WIDTH/3:
+                self.pos.x += PLAYERXVEL
+            if keys[pygame.K_LEFT]:
+                self.pos.x -= PLAYERXVEL
+            
 
-        #left and right motion, continuous
-        if keys[pygame.K_RIGHT] and self.pos.x <= WIDTH/2:
-            self.pos.x += PLAYERXVEL
-        if keys[pygame.K_LEFT]:
-            self.pos.x -= PLAYERXVEL
+            #accelerate with forces
+            self.acc = self.applyForces(['gravity', 'electricity'], bullets)/self.mass
+            self.vel += self.acc*dt
+            self.pos += self.vel*dt
+            
+            self.rect.center = (self.pos.x, self.pos.y)
 
-        #accelerate with forces
-        self.acc = self.applyForces(['gravity', 'electricity'], bullets)/self.mass
-        self.vel += self.acc*dt
-        self.pos += self.vel*dt
-        
-        self.rect.center = (self.pos.x, self.pos.y)
+        elif self.moveType == "boss cutscene":
+            self.pos.x += 2*(WIDTH/4 - self.pos.x)*dt
         
 
     def landing(self, platform, dt):

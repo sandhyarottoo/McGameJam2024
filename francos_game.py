@@ -79,7 +79,7 @@ def start_game():
     startTime = pygame.time.get_ticks()
 
     prevGroundObsTime = pygame.time.get_ticks()
-    groundObstacleInterval = 6000
+    groundObstacleInterval = 5000
 
     platformTime = 0
     platformsToAdd = 0
@@ -96,7 +96,7 @@ def start_game():
         time = pygame.time.get_ticks()
         events = pygame.event.get()
 
-        if time - startTime > 10000:
+        if time - startTime > 14000:
             running = False
 
         for event in events:
@@ -166,6 +166,7 @@ def start_game():
 
     count = 0
     contraption.moveType = " "
+    physicist.moveType = " "
 
     running = True
     while running:
