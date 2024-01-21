@@ -107,23 +107,48 @@ class Player(pygame.sprite.Sprite):
         
         elif self.moveType == 'flying': 
             if not self.moveFreely:      
-                self.pos.y += 2*(HEIGHT/2 - self.pos.y)*dt
-                self.moveFreely = True
+                self.pos.y += 3*(HEIGHT/2 - self.pos.y)*dt
+                if abs(HEIGHT/2 - self.pos.y) < 3:
+                    self.moveFreely = True
             
+            if self.rect.right > WIDTH:
+                self.pos.x = WIDTH - self.image.get_width()/2
+                self.vel.x = 0
+            if self.rect.left < 0:
+                self.pos.x = 0 + self.image.get_width()/2
+                self.vel.x = 0
+            if self.rect.top < 0:
+                self.pos.y = 0 + self.image.get_height()/2  
+                self.vel.y = 0
+            if self.rect.bottom > HEIGHT:
+                self.pos.y = HEIGHT - self.image.get_height()/2
+                self.vel.y = 0
+            
+            for bullet in bullets: 
+                if self.enemyCollision(bullet):
+                    self.health -= 1
+                    self.respawn = True
+                    print('health:{}'.format(self.health))
+            if self.respawn:
+                self.pos = pygame.Vector2(WIDTH/2, HEIGHT - 10 - playerheight/2)
+                self.vel = pygame.Vector2(10,0)
+                self.respawn = False
+            
+            mult = 1.5
             if keys[pygame.K_RIGHT]:
-                self.pos.x += PLAYERXVEL
+                self.vel.x += mult*PLAYERXVEL
             if keys[pygame.K_LEFT]:
-                self.pos.x -= PLAYERXVEL
+                self.vel.x -= mult*PLAYERXVEL
             if keys[pygame.K_UP]:
-                self.pos.y -= PLAYERXVEL
+                self.vel.y -= mult*PLAYERXVEL
             if keys[pygame.K_DOWN]:
-                self.pos.y += PLAYERXVEL
+                self.vel.y += mult*PLAYERXVEL
+            
+            self.acc = self.applyForces(['electricity'], bullets)/self.mass
+            self.vel += self.acc*dt
+            self.pos += self.vel*dt
             
             
-            
-            
-        
-
         self.rect.center = (self.pos.x, self.pos.y)
         
 
