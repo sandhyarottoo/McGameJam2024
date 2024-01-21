@@ -2,7 +2,7 @@ import pygame
 import numpy as np
 import os
 from globalVars import getVars
-import ObjectClasses.player as player
+from ObjectClasses.player import Player as player
 
 permittivity = 10
 
@@ -17,7 +17,7 @@ WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL = getVars(['width', 'height', 'dt','pla
 # 1 <3 u
 
 class ChargeBullet(pygame.sprite.Sprite):
-    def __init__(self,sign,imagepos,imageneg):
+    def __init__(self,sign,imagepos,imageneg,xpos,ypos,mode):
         super().__init__()
         #sign has to be 1 or -1
         self.charge = sign*permittivity
@@ -26,7 +26,12 @@ class ChargeBullet(pygame.sprite.Sprite):
         elif sign == -1:
             image = imageneg
         self.image = image
-        self.vel = pygame.Vector2(-100,0)
+        self.pos = pygame.Vector2(xpos,ypos)
+        if mode == 'level':
+            self.vel = pygame.Vector2(-300,0)
+        if mode == 'bossfight':
+            angle = np.random.random()*np.pi
+            self.vel = 300*pygame.Vector2(np.cos(angle),np.sin(angle))
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH,np.random.randint(HEIGHT/2,HEIGHT))
 
@@ -49,11 +54,12 @@ class Laser(pygame.sprite.Sprite):
         self.isRandom = isRandom
         self.chosenLaserLeft = chosenLaserLeft
         self.isDeadly = isDeadly
+        self.colour = (0,0,0)
 
         randLaserLeft = np.random.randint(0, WIDTH-60)
 
         if(self.isRandom):
-            laserLeft = chosenLaserLeft
+            laserLeft = randLaserLeft
 
         else:
             laserLeft=chosenLaserLeft
@@ -71,9 +77,9 @@ class Laser(pygame.sprite.Sprite):
             thickness = int(56.3*(pygame.time.Clock.get_time()-powerupStartTime)/2500)+8*np.sin((pygame.time.Clock.get_time()-powerupStartTime)/120.39)
             rectangle = pygame.rect.update(laserLeft+30, 75, thickness, HEIGHT-150) 
             if isDeadly:
-                colour = (255, 30, 50)
+                self.colour = (255, 30, 50)
             else:
-                colour = (50, 30, 255)
+                self.colour = (50, 30, 255)
 
             #delete old rect
             #pygame.draw.rect(screen, colour, rectangle)
@@ -90,12 +96,12 @@ class Laser(pygame.sprite.Sprite):
 
             self.kill()
         
-        def update(self,dt):
-            self.rect = player.position()
+    def update(self,dt):
+            self.rect = player.pos
         
-        def Blind():
+    def Blind():
             darknessRect = darknessImage.get_rect()
-            darknessRect.center = player.pos()
+            darknessRect.center = player.pos
             blindnessStart = pygame.time.Clock.get_time()
 
             while(pygame.time.Clock.get_time() - blindnessStart < 3000):

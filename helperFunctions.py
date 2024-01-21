@@ -51,7 +51,7 @@ def createBullet(imagepos, imageneg, xpos, ypos,mode):
     bullet = enemies.ChargeBullet(num,imagepos,imageneg, xpos, ypos,mode)
 
     return bullet
-
+#blabla
 
 def createLife():
     image = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Star.png').convert_alpha()
