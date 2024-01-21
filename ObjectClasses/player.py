@@ -66,6 +66,7 @@ class Player(pygame.sprite.Sprite):
         #for landing on a platform
         if pygame.sprite.collide_mask(self, platform) and self.vel.y > 0 and (self.pos.y + playerheight/2) < platform.rect.top + 10 :
             newpos = platform.rect.top - playerheight/2
+            self.vel.x = platform.vel.x
             self.pos.y = newpos
             self.vel.y = 0
             
@@ -83,6 +84,7 @@ class Player(pygame.sprite.Sprite):
 
             elif self.vel.y > 0:
                 self.pos.y = obstacle.rect.top - playerheight/2
+                self.vel.x = obstacle.vel.x
                 self.vel.y = 0
                 self.jumping = False
         
@@ -106,7 +108,7 @@ class Player(pygame.sprite.Sprite):
                 r = bullet.pos-self.pos
                 bulletCharge = bullet.charge
                 abs_r_sq = r.x**2 + r.y**2
-                force += (2000*bulletCharge*self.charge/abs_r_sq)*r.normalize()
+                force += (20000000*bulletCharge*self.charge/abs_r_sq)*r.normalize()
             
         return force
 

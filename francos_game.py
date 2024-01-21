@@ -20,8 +20,8 @@ clock = pygame.time.Clock()
 
 imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Soccer_Ball.png').convert_alpha()
 imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Basketball_PNG.png').convert_alpha()
-imageneg = pygame.transform.scale(imageneg, (50, 50))
-imagepos = pygame.transform.scale(imagepos, (50, 50))
+imageneg = pygame.transform.scale(imageneg, (50, 20))
+imagepos = pygame.transform.scale(imagepos, (50, 20))
 
 groundObjectImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/stronq_doge.png').convert_alpha()
 groundObjectImage = pygame.transform.scale(groundObjectImage, g_obs_dims)
