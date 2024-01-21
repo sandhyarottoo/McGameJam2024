@@ -57,9 +57,9 @@ def createLife():
     image = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Star.png').convert_alpha()
     image = pygame.transform.scale(image,(20,20))
 
-    life1 = PlayerHealth(image,0,0)
-    life2 = PlayerHealth(image,30,0)
-    life3 = PlayerHealth(image,60,0)
+    life1 = PlayerHealth(image,0,20)
+    life2 = PlayerHealth(image,30,20)
+    life3 = PlayerHealth(image,60,20)
 
     return life1,life2,life3
 

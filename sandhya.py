@@ -125,17 +125,18 @@ def start_game():
             bullets.add(bullet)
             
         screen.fill((0,0,0))
-
+        health.draw(screen)
         keys = pygame.key.get_pressed()
-        for life in health:
-            life.update(players)
         for player in players:
             if player.respawn:
                 player.pos = pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
                 player.vel = pygame.Vector2(10,0)
+                player.respawn = False
+        for life in health:
+            life.update(players)
         players.update(events, keys, platforms, groundObstacles, bullets)
         players.draw(screen)
-        health.draw(screen)
+
         
         for group in groupOfGroups:
             group.update(dt)

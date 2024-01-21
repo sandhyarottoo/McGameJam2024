@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.mass = 10
         self.charge = 1
         self.jumping = False
-        self.health = 3
+        self.health = 4
         self.respawn = False
         
         # for animation
@@ -73,7 +73,7 @@ class Player(pygame.sprite.Sprite):
         
 
         #left and right motion, continuous
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and self.pos.x <= WIDTH/2:
             self.pos.x += PLAYERXVEL
         if keys[pygame.K_LEFT]:
             self.pos.x -= PLAYERXVEL
@@ -139,27 +139,27 @@ class Player(pygame.sprite.Sprite):
 
 
 class PlayerHealth(pygame.sprite.Sprite):
+    heartcounter = 0
     def __init__(self,image,posx,posy):
-        heartcounter = 0
         super().__init__()
         self.image = pygame.transform.scale(image, (20, 20))
         self.pos = pygame.Vector2(posx,posy)
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x, self.pos.y)
-        heartcounter += 1
-        self.number = heartcounter
+        PlayerHealth.heartcounter += 1
+        self.number = PlayerHealth.heartcounter
 
     def update(self,players):
         for player in players:
-            if player.health == 2 and self.number ==3: 
+            if player.health == self.number:
                 self.kill()
-            elif player.health == 1 and self.number == 2:
-                self.kill()
-            elif player.health == 0 and self.number == 1:
-                self.kill()
-                player.kill()
-        #LALALALALALALA
-
+            # if player.health == 2 and self.number == 3: 
+            #     self.kill()
+            # if player.health == 1 and self.number == 2:
+            #     self.kill()
+            # if player.health == 0 and self.number == 1:
+            #     self.kill()
+            #     player.kill()
 
 
 
