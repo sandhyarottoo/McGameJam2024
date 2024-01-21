@@ -9,6 +9,7 @@ import helperFunctions as helpers
 import ast
 import sys
 import os
+import random
 
 WIDTH, HEIGHT, dt, g_obs_dims = getVars(['width', 'height', 'dt', 'g_obs_dims'])
 
@@ -32,6 +33,13 @@ platformImage = pygame.transform.scale(platformImage, (80, 20))
 
 playerIMGS = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run1.png').convert_alpha(),
               pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run2.png').convert_alpha()]
+
+# importing books for platform
+BookIMGs = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Feynman.png').convert_alpha(),
+            pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Griffiths.png').convert_alpha(),
+            pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Stewart.png').convert_alpha()]
+for i, book in enumerate(BookIMGs):
+    BookIMGs[i] = pygame.transform.scale(book, (80, 20))
 
 ### OBJECT SETUP ###
 
@@ -109,11 +117,12 @@ def start_game():
 
         if platformsToAdd > 0:
             if time - platformTime > groundObstacleInterval/4:
+                i = random.randint(0,2)
                 platformTime = time
                 if platformsToAdd == 3:
-                    platforms.add(helpers.createPlatform(platformImage, low=True))
+                    platforms.add(helpers.createPlatform(BookIMGs[i], low=True))
                 else:
-                    platforms.add(helpers.createPlatform(platformImage, low=False))
+                    platforms.add(helpers.createPlatform(BookIMGs[i], low=False))
                 
                 platformsToAdd -= 1
 
