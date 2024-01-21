@@ -10,6 +10,7 @@ import ast
 import sys
 import os
 import random
+import audioFunctions
 
 WIDTH, HEIGHT, dt, g_obs_dims, obstacleVel = getVars(['width', 'height', 'dt', 'g_obs_dims', 'obstacle_speed'])
 
@@ -88,6 +89,7 @@ health.add(life1,life2,life3)
 
 def start_game():
 
+    audioFunctions.playMusic()
     startTime = pygame.time.get_ticks()
 
     prevGroundObsTime = pygame.time.get_ticks()
