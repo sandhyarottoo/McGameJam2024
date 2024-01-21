@@ -2,6 +2,7 @@ import pygame
 import numpy as np
 import os
 from globalVars import getVars
+import audioFunctions
 
 PLAYERXVEL = getVars(['playervelocity'])[0]
 
@@ -32,8 +33,14 @@ class Player(pygame.sprite.Sprite):
         self.dtime= 0
         self.index = 0
 
+        # add sound delay for running
+        self.soundTime = 0
 
     def update(self, events, keys, platforms, obstacles,bullets):
+        # if not self.jumping and self.soundTime > 100*dt:
+        #     audioFunctions.playRun()
+        #     self.soundTime = 0
+        # self.soundTime += dt
         
         if self.moveType == 'running':
             if self.dtime >  100*dt: 
@@ -63,7 +70,9 @@ class Player(pygame.sprite.Sprite):
                 if self.enemyCollision(bullet):
                     self.health -= 1
                     self.respawn = True
+                    audioFunctions.playHurt()
                     print('health:{}'.format(self.health))
+
             if self.respawn:
                 self.pos = pygame.Vector2(WIDTH/2, HEIGHT - 10 - playerheight/2)
                 self.vel = pygame.Vector2(10,0)
@@ -75,6 +84,7 @@ class Player(pygame.sprite.Sprite):
                     if event.key == pygame.K_SPACE and not self.jumping:
                         self.vel.y += -300
                         self.jumping = True
+                        audioFunctions.playJump()
             
             
             #left and right motion, continuous
@@ -126,6 +136,7 @@ class Player(pygame.sprite.Sprite):
             
             for bullet in bullets: 
                 if self.enemyCollision(bullet):
+                    audioFunctions.playHurt()
                     self.health -= 1
                     self.respawn = True
                     print('health:{}'.format(self.health))
