@@ -22,6 +22,7 @@ class ChargeBullet(pygame.sprite.Sprite):
         #sign has to be 1 or -1
         self.charge = sign*permittivity
         self.mode = mode
+        self.angle = 0
 
         if sign == 1:
             image = imagepos
@@ -32,8 +33,8 @@ class ChargeBullet(pygame.sprite.Sprite):
         if self.mode == 'level':
             self.vel = pygame.Vector2(-300,0)
         if self.mode == 'bossfight':
-            angle = np.random.random()*-np.pi
-            self.vel = 200*pygame.Vector2(np.cos(angle),np.sin(angle))
+            self.angle = np.random.random()*-np.pi
+            self.vel = 200*pygame.Vector2(np.cos(self.angle),np.sin(self.angle))
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x, self.pos.y)
 
@@ -44,6 +45,8 @@ class ChargeBullet(pygame.sprite.Sprite):
         right = self.rect.right
         left = self.rect.left
         bottom = self.rect.bottom
+        
+        pygame.transform.rotate(self.image, np.degrees(self.angle))
 
         if  right < 0 or left > WIDTH or bottom < 0:
             self.kill()

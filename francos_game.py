@@ -26,11 +26,11 @@ imagepos = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/med
 imageneg = pygame.transform.scale(imageneg, (50, 20))
 imagepos = pygame.transform.scale(imagepos, (50, 20))
 
-groundObjectImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/stronq_doge.png').convert_alpha()
+groundObjectImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Table.png').convert_alpha()
 groundObjectImage = pygame.transform.scale(groundObjectImage, g_obs_dims)
 
 platformImage = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/lebron.jpeg').convert_alpha()
-platformImage = pygame.transform.scale(platformImage, (80, 20))
+platformImage = pygame.transform.scale(platformImage, (150, 50))
 
 playerIMGS = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run1.png').convert_alpha(),
               pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/physicist_Run2.png').convert_alpha()]
@@ -46,7 +46,8 @@ BookIMGs = [pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/me
             pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Griffiths.png').convert_alpha(),
             pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Stewart.png').convert_alpha()]
 for i, book in enumerate(BookIMGs):
-    BookIMGs[i] = pygame.transform.scale(book, (80, 20))
+    BookIMGs[i] = pygame.transform.scale(book, (170, 40))
+
 
 ### OBJECT SETUP ###
 
