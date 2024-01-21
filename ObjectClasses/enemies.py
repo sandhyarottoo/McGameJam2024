@@ -45,8 +45,6 @@ class ChargeBullet(pygame.sprite.Sprite):
         right = self.rect.right
         left = self.rect.left
         bottom = self.rect.bottom
-        
-        pygame.transform.rotate(self.image, np.degrees(self.angle))
 
         if  right < 0 or left > WIDTH or bottom < 0:
             self.kill()
