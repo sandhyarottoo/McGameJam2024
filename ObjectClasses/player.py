@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.mass = 10
         self.charge = 1
         self.jumping = False
-        self.health = 4
+        self.health = 3
         self.respawn = False
         
         # for animation
@@ -62,7 +62,11 @@ class Player(pygame.sprite.Sprite):
             if self.enemyCollision(bullet):
                 self.health -= 1
                 self.respawn = True
-                print(self.health)
+                print('health:{}'.format(self.health))
+        if  self.respawn:
+            self.pos = pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
+            self.vel = pygame.Vector2(10,0)
+            self.respawn = False
 
         #jump, hit the key once
         for event in events:
@@ -151,15 +155,20 @@ class PlayerHealth(pygame.sprite.Sprite):
 
     def update(self,players):
         for player in players:
-            if player.health == self.number:
-                self.kill()
-            # if player.health == 2 and self.number == 3: 
-            #     self.kill()
-            # if player.health == 1 and self.number == 2:
-            #     self.kill()
-            # if player.health == 0 and self.number == 1:
-            #     self.kill()
-            #     player.kill()
+            if self.number == 3:
+                if player.health == 2:
+                    print('number:{}'.format(self.number),'health in number:{}'.format(player.health))
+                    self.kill()
+            elif self.number == 2:
+                if player.health == 1:
+                    self.kill()
+                    print('number:{}'.format(self.number),'health in number:{}'.format(player.health))
+            elif self.number == 1:
+                if player.health == 0:
+                    self.kill()
+                    print('number:{}'.format(self.number),'health in number:{}'.format(player.health))
+                    player.kill()
+
 
 
 
