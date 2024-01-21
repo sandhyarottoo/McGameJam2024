@@ -71,7 +71,6 @@ class Player(pygame.sprite.Sprite):
                     self.health -= 1
                     self.respawn = True
                     audioFunctions.playHurt()
-                    print('health:{}'.format(self.health))
 
             if self.respawn:
                 self.pos = pygame.Vector2(WIDTH/2, HEIGHT - 10 - playerheight/2)

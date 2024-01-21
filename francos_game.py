@@ -163,9 +163,11 @@ def start_game():
         bck_x2 += obstacleVel*dt
         screen.blit(backgroundIMG, (bck_x1, 0))
         screen.blit(backgroundIMG, (bck_x2, 0))
-        for bck_img in [bck_x1, bck_x2]:
-            if bck_img <= -2*WIDTH:
-                bck_img = 2*WIDTH
+        
+        if bck_x1 <= -2*WIDTH:
+            bck_x1 = 2*WIDTH
+        if bck_x2 <= -2*WIDTH:
+            bck_x2 = 2*WIDTH
 
 
         health.draw(screen)
