@@ -103,7 +103,7 @@ def start_game():
         time = pygame.time.get_ticks()
         events = pygame.event.get()
 
-        if time - startTime > 14000:
+        if time - startTime > 9000:
             running = False
 
         for event in events:
@@ -137,13 +137,13 @@ def start_game():
         bulletInterval = np.random.randint(3000,4000)
         if time - prevBulletTime > bulletInterval:
             prevBulletTime = time
-            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y,'level')
+            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
             bullets.add(bullet)
             
         screen.fill((0,0,0))
         
-        bck_x1 -= obstacleVel*dt
-        bck_x2 -= obstacleVel*dt
+        bck_x1 += obstacleVel*dt
+        bck_x2 += obstacleVel*dt
         screen.blit(backgroundIMG, (bck_x1, 0))
         screen.blit(backgroundIMG, (bck_x2, 0))
         for bck_img in [bck_x1, bck_x2]:
@@ -162,7 +162,7 @@ def start_game():
             group.update(dt)
             group.draw(screen)
         
-        contraptionGroup.update(dt)
+        contraptionGroup.update(physicist, dt)
         contraptionGroup.draw(screen)
 
         pygame.display.flip()
@@ -184,6 +184,9 @@ def start_game():
     contraption.moveType = " "
     physicist.moveType = "boss cutscene"
 
+    prevBulletTime = pygame.time.get_ticks()
+    bulletInterval = 2000
+
     running = True
     while running:
 
@@ -199,6 +202,12 @@ def start_game():
                     running = False
 
         screen.fill((0,0,0))
+
+        if time - prevBulletTime > bulletInterval and contraption.readyToFire:
+            prevBulletTime = time
+            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
+            bullet.mode = 'bossfight'
+            bullets.add(bullet)
 
         keys = pygame.key.get_pressed()
         players.update(events, keys, platforms, groundObstacles, bullets)
@@ -216,7 +225,7 @@ def start_game():
             count += 1
             contraption.moveType = "centering"
 
-        contraptionGroup.update(dt)
+        contraptionGroup.update(physicist, dt)
         contraptionGroup.draw(screen)
 
 

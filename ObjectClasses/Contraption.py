@@ -22,6 +22,7 @@ class Contraption(pygame.sprite.Sprite):
         self.pos = pygame.Vector2(19/20*WIDTH, 4/10*HEIGHT)
         self.vel = pygame.Vector2(0, 0)
         self.acc = pygame.Vector2(0, 0)
+        self.readyToFire = False
         
         self.moveType = "hovering"
         
@@ -30,7 +31,7 @@ class Contraption(pygame.sprite.Sprite):
         self.rect.center = (self.pos.x, self.pos.y)
     
     
-    def update(self, dt):
+    def update(self, physicist, dt):
         
         if self.moveType == "hovering":
             
@@ -60,6 +61,8 @@ class Contraption(pygame.sprite.Sprite):
             if abs(self.pos.x - WIDTH/2) < 2:
                 self.vel = pygame.Vector2(0, 0)
                 self.acc = pygame.Vector2(0, 0)
+                physicist.moveType = 'flying'
+                self.readyToFire = True
                 self.moveType = "standing"
             
         if self.moveType == "standing":
