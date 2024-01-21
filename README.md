@@ -1,5 +1,5 @@
-# McGameJam2024
-## TITLE
+## McGameJam2024
+# Schrodinger's Contraption
 
 
 So you have chosen to pursue graduate studies in physics. What if a troublemaking contraption showed up and started annoying you? You really need to take your measurements!
