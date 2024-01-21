@@ -17,11 +17,11 @@ WIDTH, HEIGHT, dt, PLAYERXVEL,PLAYERYVEL = getVars(['width', 'height', 'dt','pla
 # 1 <3 peeny
 
 class ChargeBullet(pygame.sprite.Sprite):
-    def __init__(self,sign,imagepos,imageneg,xpos,ypos):
+    def __init__(self,sign,imagepos,imageneg,xpos,ypos, mode):
         super().__init__()
         #sign has to be 1 or -1
         self.charge = sign*permittivity
-        self.mode = 'level'
+        self.mode = mode
 
         if sign == 1:
             image = imagepos

@@ -26,6 +26,7 @@ class Player(pygame.sprite.Sprite):
         self.health = 3
         self.respawn = False
         self.moveType = 'running'
+        self.moveFreely = False
         
         # for animation
         self.dtime= 0
@@ -104,8 +105,10 @@ class Player(pygame.sprite.Sprite):
             self.vel += self.acc*dt
             self.pos += self.vel*dt
         
-        elif self.moveType == 'flying':         
-            self.pos.y += 2*(HEIGHT/2 - self.pos.y)*dt
+        elif self.moveType == 'flying': 
+            if not self.moveFreely:      
+                self.pos.y += 2*(HEIGHT/2 - self.pos.y)*dt
+                self.moveFreely = True
             
             if keys[pygame.K_RIGHT]:
                 self.pos.x += PLAYERXVEL

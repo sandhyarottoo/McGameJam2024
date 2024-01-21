@@ -45,10 +45,10 @@ def createPlayer():
     return physicist
 
 
-def createBullet(imagepos, imageneg, xpos, ypos):
+def createBullet(imagepos, imageneg, xpos, ypos, mode):
     signs = [-1,1]
     num = np.random.choice(signs)
-    bullet = enemies.ChargeBullet(num,imagepos,imageneg, xpos, ypos)
+    bullet = enemies.ChargeBullet(num,imagepos,imageneg, xpos, ypos, mode)
 
     return bullet
 #blabla

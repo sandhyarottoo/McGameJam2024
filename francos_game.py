@@ -137,7 +137,7 @@ def start_game():
         bulletInterval = np.random.randint(3000,4000)
         if time - prevBulletTime > bulletInterval:
             prevBulletTime = time
-            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
+            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y, 'level')
             bullets.add(bullet)
             
         screen.fill((0,0,0))
@@ -185,7 +185,7 @@ def start_game():
     physicist.moveType = "boss cutscene"
 
     prevBulletTime = pygame.time.get_ticks()
-    bulletInterval = 2000
+    bulletInterval = 1500
 
     running = True
     while running:
@@ -205,8 +205,7 @@ def start_game():
 
         if time - prevBulletTime > bulletInterval and contraption.readyToFire:
             prevBulletTime = time
-            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
-            bullet.mode = 'bossfight'
+            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y, 'bossfight')
             bullets.add(bullet)
 
         keys = pygame.key.get_pressed()
