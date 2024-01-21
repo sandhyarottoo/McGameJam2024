@@ -19,6 +19,10 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
+pygame.font.init()
+endText = pygame.font.SysFont('verdana',10).render('LOSER',False,(250,220,210))
+
+
 ### loading images ###
 
 imageneg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/bullet_neg.png').convert_alpha()
@@ -176,8 +180,14 @@ def start_game():
         
         contraptionGroup.update(physicist, dt)
         contraptionGroup.draw(screen)
+        
+        for player in players:
+            if player.health == 0:
+                screen.fill((0,0,0))
+                screen.blit(endText,(WIDTH/2,HEIGHT/2))
 
         pygame.display.flip()
+        clock.tick(120)
     
     ### PART 2 ###
     
@@ -222,7 +232,10 @@ def start_game():
             bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y, 'bossfight')
             bullets.add(bullet)
 
+        health.draw(screen)
         keys = pygame.key.get_pressed()
+        for life in health:
+            life.update(players)
         players.update(events, keys, platforms, groundObstacles, bullets)
         players.draw(screen)
         
@@ -240,9 +253,14 @@ def start_game():
 
         contraptionGroup.update(physicist, dt)
         contraptionGroup.draw(screen)
-
+        
+        for player in players:
+            if player.health == 0:
+                screen.fill((0,0,0))
+                screen.blit(endText,(WIDTH/2,HEIGHT/2))
 
         pygame.display.flip()
+        clock.tick(120)
         
 
 # initializing menu
