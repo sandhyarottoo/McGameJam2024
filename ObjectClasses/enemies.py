@@ -23,7 +23,7 @@ class ChargeBullet(pygame.sprite.Sprite):
 
         self.image = image
         self.pos = pygame.Vector2(xpos, ypos)
-        self.vel = pygame.Vector2(-200,0)
+        self.vel = pygame.Vector2(-300,0)
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x, self.pos.y)
 

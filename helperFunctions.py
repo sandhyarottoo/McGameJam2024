@@ -20,7 +20,7 @@ def createPlatform(image, low = True):
     if low:
         platform = Obstacles.Platform(image, np.random.randint(HEIGHT - g_obs_dims[1] - 50, HEIGHT - g_obs_dims[1]))
     else:
-        platform = Obstacles.Platform(image, np.random.randint(HEIGHT - g_obs_dims[1] - 300, HEIGHT - g_obs_dims[1] - 100))
+        platform = Obstacles.Platform(image, np.random.randint(HEIGHT - g_obs_dims[1] - 200, HEIGHT - g_obs_dims[1] - 100))
 
     return platform
 

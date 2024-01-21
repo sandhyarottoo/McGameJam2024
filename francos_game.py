@@ -61,21 +61,28 @@ players.add(physicist)
 
 def start_game():
 
+    startTime = pygame.time.get_ticks()
+
     prevGroundObsTime = pygame.time.get_ticks()
-    groundObstacleInterval = 4000
+    groundObstacleInterval = 6000
 
     platformTime = 0
     platformsToAdd = 0
 
     bulletTime = 0
-    bulletInterval = 3000
+    bulletInterval = 4000
     prevBulletTime = pygame.time.get_ticks()
+
+    ### PART 1 ###
 
     running = True
     while running:
 
         time = pygame.time.get_ticks()
         events = pygame.event.get()
+
+        if time - startTime > 30000:
+            running = False
 
         for event in events:
             if event.type == pygame.QUIT:
@@ -94,7 +101,7 @@ def start_game():
             platformsToAdd = 3
 
         if platformsToAdd > 0:
-            if time - platformTime > groundObstacleInterval/5:
+            if time - platformTime > groundObstacleInterval/4:
                 platformTime = time
                 if platformsToAdd == 3:
                     platforms.add(helpers.createPlatform(platformImage, low=True))
@@ -102,6 +109,47 @@ def start_game():
                     platforms.add(helpers.createPlatform(platformImage, low=False))
                 
                 platformsToAdd -= 1
+
+        # bullets
+        bulletInterval = np.random.randint(3000,4000)
+        if time - prevBulletTime > bulletInterval:
+            prevBulletTime = time
+            bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y)
+            bullets.add(bullet)
+            
+        screen.fill((0,0,0))
+
+        keys = pygame.key.get_pressed()
+        players.update(events, keys, platforms, groundObstacles, bullets)
+        players.draw(screen)
+
+        for player in players:
+            if player.enemyCollision(bullets):
+                player.kill()
+        
+        for group in groupOfGroups:
+            group.update(dt)
+            group.draw(screen)
+
+
+        pygame.display.flip()
+    
+    ### PART 2 ###
+
+    running = True
+    while running:
+
+        time = pygame.time.get_ticks()
+        events = pygame.event.get()
+
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+
 
         # bullets
         bulletInterval = np.random.randint(3000,4000)
