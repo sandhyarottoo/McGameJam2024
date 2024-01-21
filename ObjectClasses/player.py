@@ -63,7 +63,9 @@ class Player(pygame.sprite.Sprite):
                 self.respawn = True
 
         if self.respawn:
-            pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
+            print('respawned')
+            self.rect.center = pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
+            self.respawn = False
 
         #jump, hit the key once
         for event in events:
@@ -132,7 +134,7 @@ class Player(pygame.sprite.Sprite):
                 r = bullet.pos-self.pos
                 bulletCharge = bullet.charge
                 abs_r_sq = np.sqrt(r.x**2 + r.y**2)
-                force += (900000000*bulletCharge*self.charge/(abs_r_sq)**3*r.normalize())
+                force += (900000000*bulletCharge*self.charge/(abs_r_sq)**3)*r.normalize()
             
         return force
 

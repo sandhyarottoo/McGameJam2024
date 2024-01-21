@@ -84,7 +84,7 @@ def start_game():
         time = pygame.time.get_ticks()
         events = pygame.event.get()
 
-        if time - startTime > 30000:
+        if time - startTime > 8000:
             running = False
 
         for event in events:
@@ -125,10 +125,6 @@ def start_game():
         keys = pygame.key.get_pressed()
         players.update(events, keys, platforms, groundObstacles, bullets)
         players.draw(screen)
-
-        for player in players:
-            if player.enemyCollision(bullets):
-                player.kill()
         
         for group in groupOfGroups:
             group.update(dt)
