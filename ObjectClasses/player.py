@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.charge = 1
         self.jumping = False
         self.health = 3
+        self.respawn = False
         
         # for animation
         self.dtime= 0
@@ -55,6 +56,14 @@ class Player(pygame.sprite.Sprite):
         #treat the obstacle collisions
         for obstacle in obstacles:
             self.collision(obstacle, dt)
+
+        for bullet in bullets: 
+            if self.enemyCollision(bullet):
+                self.health -= 1
+                self.respawn = True
+
+        if self.respawn:
+            pygame.Vector2(0, HEIGHT - 10 - playerheight/2)
 
         #jump, hit the key once
         for event in events:
@@ -105,10 +114,9 @@ class Player(pygame.sprite.Sprite):
                 self.jumping = False
         
 
-    def enemyCollision(self,enemies):
-        for enemy in enemies:
-            if pygame.sprite.collide_mask(self,enemy):
-                return True
+    def enemyCollision(self,enemy):
+        if pygame.sprite.collide_mask(self,enemy):
+            return True
 
         
 
@@ -123,8 +131,8 @@ class Player(pygame.sprite.Sprite):
             for bullet in bullets:
                 r = bullet.pos-self.pos
                 bulletCharge = bullet.charge
-                abs_r_sq = r.x**2 + r.y**2
-                force += (900000000*bulletCharge*self.charge/abs_r_sq)*r.normalize()
+                abs_r_sq = np.sqrt(r.x**2 + r.y**2)
+                force += (900000000*bulletCharge*self.charge/(abs_r_sq)**3*r.normalize())
             
         return force
 
