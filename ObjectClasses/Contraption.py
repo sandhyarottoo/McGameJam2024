@@ -39,19 +39,24 @@ class Contraption(pygame.sprite.Sprite):
     def update(self, physicist, dt):
         
         if self.index == 0:
-            if self.dtime >  600*dt: 
+            if self.dtime >  400*dt: 
                 self.image = self.images[1]
                 self.index += 1
                 self.dtime = 0
         elif self.index == 1:
             if self.dtime >  200*dt: 
                 self.image = self.images[2]
-                self.index = 0
+                self.index += 1
+                self.dtime = 0
+        elif self.index == 2:
+            if self.dtime >  40*dt: 
+                self.image = self.images[1]
+                self.index += 1
                 self.dtime = 0
         else:
-            if self.dtime >  50*dt: 
+            if self.dtime >  200*dt: 
                 self.image = self.images[0]
-                self.index += 1
+                self.index = 0
                 self.dtime = 0
                 
         self.dtime += dt
