@@ -64,4 +64,14 @@ def createLife():
     return life1,life2,life3
 
 
+def createLaser(image, posx,posy,mode):
+    image = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Laser.png').convert_alpha()
+    laser = enemies.Laser(image, posx,posy,mode)
+    return laser
+
+def createLaserWarning(radius,laser):
+    laserwarning = enemies.LaserWarning(radius,laser)
+    return laserwarning
+
+
 

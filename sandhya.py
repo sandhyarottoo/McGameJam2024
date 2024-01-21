@@ -64,6 +64,10 @@ life1,life2,life3 = helpers.createLife()
 health = pygame.sprite.Group()
 health.add(life1,life2,life3)
 
+lasers = pygame.sprite.Group()
+laserwarnings = pygame.sprite.Group()
+
+
 ### STARTING GAME LOOP ###
 
 def start_game():
@@ -79,6 +83,10 @@ def start_game():
     bulletTime = 0
     bulletInterval = 4000
     prevBulletTime = pygame.time.get_ticks()
+
+    laserTime = 0
+    laserInterval = 3000
+    prevLaserTime = pygame.time.get_ticks()
 
     ### PART 1 ###
 
@@ -123,6 +131,13 @@ def start_game():
             prevBulletTime = time
             bullet = helpers.createBullet(imagepos, imageneg, contraption.pos.x, contraption.pos.y,'level')
             bullets.add(bullet)
+
+        laserInterval = np.random.randint(3000,4000)
+        if time - prevLaserTime > laserInterval:
+            preLaserTime = time
+            laser = helpers.createLaser(laser,contraption.pos.x,contraption.pos.y,'level')
+            lasers.add(laser)
+    
             
         screen.fill((0,0,0))
         health.draw(screen)
