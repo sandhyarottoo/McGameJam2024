@@ -151,6 +151,7 @@ def start_game():
         lines = f.readlines()
         listOfBossPositions = lines[0].split()
         listOfBossPositions = [ast.literal_eval(item) for item in listOfBossPositions]
+        listOfBossPositions = listOfBossPositions[:-350]
         numOfBossPositions = len(listOfBossPositions)
     
     xDiff = contraption.pos.x - listOfBossPositions[0][0]
