@@ -4,7 +4,7 @@ from globalVars import getVars
 
 
 # importing global variables
-WIDTH, HEIGHT, dt = getVars(['width', 'height', 'dt'])
+WIDTH, HEIGHT, dt, g = getVars(['width', 'height', 'dt', 'g'])
 
 # creating class
 class Contraption(pygame.sprite.Sprite):
@@ -21,7 +21,7 @@ class Contraption(pygame.sprite.Sprite):
         self.amplitude = 25
         self.pos = pygame.Vector2(19/20*WIDTH, 4/10*HEIGHT)
         self.vel = pygame.Vector2(0, 0)
-        
+        self.acc = pygame.Vector2(0, 0)
         
         self.moveType = "hovering"
         
@@ -45,5 +45,14 @@ class Contraption(pygame.sprite.Sprite):
             self.pos.x = self.anchorPoint.x + (self.amplitude/2)*np.sin(self.xtimeParam)
             self.pos.y = self.anchorPoint.y + (3*self.amplitude)*np.sin(2*self.ytimeParam)
 
-            self.rect.center = (self.pos.x, self.pos.y)
+        
+        if self.moveType == "standing":
+            self.acc = (0, g)
+            self.vel += self.acc*dt
+            self.pos += self.vel*dt
+        
+        self.rect.center = (self.pos.x, self.pos.y)
+
+
+
             

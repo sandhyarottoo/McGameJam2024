@@ -185,7 +185,7 @@ def start_game():
             contraption.pos.y = listOfBossPositions[count][1] + yDiff
             count += 1
         else:
-            contraption.moveType = "hovering"
+            contraption.moveType = "standing"
 
         contraptionGroup.update(dt)
         contraptionGroup.draw(screen)

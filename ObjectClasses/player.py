@@ -5,7 +5,7 @@ from globalVars import getVars
 
 
 
-WIDTH, HEIGHT, dt, PLAYERYVEL, playerheight, playerwidth = getVars(['width', 'height', 'dt','jumpvel', 'playerheight', 'playerwidth'])
+WIDTH, HEIGHT, dt, PLAYERYVEL, playerheight, playerwidth, g = getVars(['width', 'height', 'dt','jumpvel', 'playerheight', 'playerwidth', 'g'])
 
 class Player(pygame.sprite.Sprite):
     def __init__(self,images):
@@ -117,7 +117,6 @@ class Player(pygame.sprite.Sprite):
         force = pygame.Vector2(0, 0)
 
         if 'gravity' in listofforces:
-            g = 200
             force += pygame.Vector2(0, self.mass*g)
     
         if 'electricity' in listofforces:
