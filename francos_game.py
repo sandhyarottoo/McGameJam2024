@@ -11,7 +11,7 @@ import sys
 import os
 import random
 
-WIDTH, HEIGHT, dt, g_obs_dims = getVars(['width', 'height', 'dt', 'g_obs_dims'])
+WIDTH, HEIGHT, dt, g_obs_dims, obstacleVel = getVars(['width', 'height', 'dt', 'g_obs_dims', 'obstacle_speed'])
 
 # pygame setup
 pygame.init()
@@ -93,7 +93,7 @@ def start_game():
     
      # background x positions
     bck_x1 = 0
-    bck_x2 = WIDTH
+    bck_x2 = 2*WIDTH
 
     ### PART 1 ###
 
@@ -142,8 +142,8 @@ def start_game():
             
         screen.fill((0,0,0))
         
-        bck_x1 -= 130*dt
-        bck_x2 -= 130*dt
+        bck_x1 -= obstacleVel*dt
+        bck_x2 -= obstacleVel*dt
         screen.blit(backgroundIMG, (bck_x1, 0))
         screen.blit(backgroundIMG, (bck_x2, 0))
         for bck_img in [bck_x1, bck_x2]:
