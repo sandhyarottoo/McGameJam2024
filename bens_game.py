@@ -70,7 +70,6 @@ players.add(physicist)
 
 backgroundIMG = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Background_lvl1.png').convert_alpha()
 backgroundIMG = pygame.transform.scale(backgroundIMG, (2*WIDTH, HEIGHT))
-backgroundIMG2 = backgroundIMG.copy()
 
 life1,life2,life3 = helpers.createLife()
 health = pygame.sprite.Group()
@@ -146,7 +145,7 @@ def start_game():
         bck_x1 -= 130*dt
         bck_x2 -= 130*dt
         screen.blit(backgroundIMG, (bck_x1, 0))
-        screen.blit(backgroundIMG2, (bck_x2, 0))
+        screen.blit(backgroundIMG, (bck_x2, 0))
         for bck_img in [bck_x1, bck_x2]:
             if bck_img <= -2*WIDTH:
                 bck_img = 2*WIDTH

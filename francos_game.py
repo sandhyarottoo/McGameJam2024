@@ -68,6 +68,9 @@ physicist = player.Player(playerIMGS)
 players = pygame.sprite.Group()
 players.add(physicist)
 
+backgroundIMG = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + '/media/Background_lvl1.png').convert_alpha()
+backgroundIMG = pygame.transform.scale(backgroundIMG, (2*WIDTH, HEIGHT))
+
 life1,life2,life3 = helpers.createLife()
 health = pygame.sprite.Group()
 health.add(life1,life2,life3)
@@ -87,6 +90,10 @@ def start_game():
     bulletTime = 0
     bulletInterval = 4000
     prevBulletTime = pygame.time.get_ticks()
+    
+     # background x positions
+    bck_x1 = 0
+    bck_x2 = WIDTH
 
     ### PART 1 ###
 
@@ -134,6 +141,15 @@ def start_game():
             bullets.add(bullet)
             
         screen.fill((0,0,0))
+        
+        bck_x1 -= 130*dt
+        bck_x2 -= 130*dt
+        screen.blit(backgroundIMG, (bck_x1, 0))
+        screen.blit(backgroundIMG, (bck_x2, 0))
+        for bck_img in [bck_x1, bck_x2]:
+            if bck_img <= -2*WIDTH:
+                bck_img = 2*WIDTH
+
 
         health.draw(screen)
         keys = pygame.key.get_pressed()
