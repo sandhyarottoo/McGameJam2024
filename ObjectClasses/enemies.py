@@ -54,7 +54,7 @@ class ChargeBullet(pygame.sprite.Sprite):
 
 class Laser(pygame.sprite.Sprite):
 
-    def __init__(self, image, posx,posy,mode):
+    def __init__(self, image, laserwarning,mode):
         super().__init__()
         image = pygame.transform.scale(image, (WIDTH-150, 60))
         self.image = image
@@ -62,14 +62,14 @@ class Laser(pygame.sprite.Sprite):
         if mode == 'level':
             self.pos = pygame.Vector2(0, np.random.random()*HEIGHT/2)
         if mode == 'bossfight':
-            self.pos = (posx,posy)
+            self.pos = (laserwarning.pos.x,laserwarning.pos.y)
             self.image = pygame.transform.rotate(self.image, self.angle)
-            self.rect = self.image.get_rect(center=(posx,posy))
+            self.rect = self.image.get_rect(center=(self.pos.x,self.pos.y))
         self.colour = (0,0,0)
 
         self.rect.left = (self.pos.x,self.pos.y)    
 
-    def update(self,player,screen,time,dt):
+    def update(self,time,dt):
         initialtime = time
         if pygame.time.Clock.get_time() - initialtime > 2500:
             self.kill()
@@ -81,12 +81,12 @@ class Laser(pygame.sprite.Sprite):
 
 
 
-class LaserWarning(pygame.sprite.sprite):
-    def __init__(self,radius,laser):
+class LaserWarning(pygame.sprite.Sprite):
+    def __init__(self,radius,posx,posy):
         self.image = pygame.Surface((radius,radius))
         self.image.fill((255,0,0))
         self.rect = self.image.get_rect()
-        self.rect.center = (laser.pos.x,laser.pos.y)
+        self.rect.center = (posx,posy)
         self.producedLaser = False
 
 
