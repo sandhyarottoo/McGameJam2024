@@ -9,4 +9,4 @@ In order to take your measurements and satisfy your PI, you must find this evil 
 
 # Instructions
 
-To play the game, simply clone the repository to your computer and run francos_game.py. Then have fun (or don't, we can't tell you what to do.)
+To play the game, simply clone the repository to your computer and run main.py. Then have fun (or don't, we can't tell you what to do.)
